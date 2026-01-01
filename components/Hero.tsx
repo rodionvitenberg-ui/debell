@@ -1,45 +1,27 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ChevronDown } from "lucide-react"; // Импортируем иконку стрелки
+import { motion, useScroll, useTransform } from "framer-motion";
+import { ChevronDown } from "lucide-react"; 
 import BlurText from "./BlurText";
 import RotatingText from "./RotatingText";
-import ColorBends from "./ColorBends"; // Импортируем эффект фона
 
 export default function Hero() {
-  return (
-    <motion.section
-      initial={{ y: "-100%" }}
-      animate={{ y: "0%" }}
-      transition={{ duration: 1.2, ease: [0.76, 0, 0.24, 1] }}
-      // Добавил overflow-hidden, чтобы фон не вылезал за пределы шторы
-      className="relative z-50 flex h-screen w-full flex-col items-center justify-start pt-32 md:pt-10 bg-background text-foreground overflow-hidden"
-    >
-      {/* === 1. ФОНОВЫЙ ЭФФЕКТ (ColorBends) === */}
-      {/* Позиционируем абсолютно позади всего контента */}
-<div className="absolute inset-0 z-0 opacity-50 pointer-events-none">
-  <ColorBends
-    overlayColor="var(--background)" // Моя настройка: смешивает края с черным фоном сайта
-    frequency={1}                  // Твоя настройка: частота волн
-    parallax={1}                     // Твоя настройка: глубина движения
-    noise={0}
-    colors={['#03bbfeff', '#ffffffff', '#6a00ffff', '#ffbb00ff']}                        // Твоя настройка: убирает шум, делает гладким                // Твоя настройка: серебристый цвет
-  />
-</div>
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 150], [1, 0]);
 
-      {/* === 2. ЦЕНТРАЛЬНЫЙ БЛОК КОНТЕНТА === */}
-      {/* relative z-10: поднимаем текст над фоном */}
-      <div className="relative z-10 flex flex-col items-center w-full mt-28 md:mt-24 px-4">
+  return (
+    <section className="relative w-full h-screen flex flex-col items-center justify-start pt-32 md:pt-10 overflow-hidden pointer-events-none">
+      
+      {/* === ЦЕНТРАЛЬНЫЙ БЛОК КОНТЕНТА === */}
+      <div className="relative z-10 flex flex-col items-center w-full max-w-full mt-28 md:mt-24 px-4 pointer-events-auto">
         
-        {/* ГЛАВНЫЙ ЛОГОТИП */}
         <BlurText
           text="DEBELL"
           delay={150}
           animateBy="letters"
           direction="top"
-          stepDuration={0.5}
-          // Твои настройки размеров:
-          className="font-cool text-[5rem] sm:text-[8rem] md:text-[11rem] lg:text-[16rem] xl:text-[18rem] font-bold uppercase tracking-tighter leading-[0.8]"
+          stepDuration={0.8}
+          className="font-cool text-[16vw] sm:text-[8rem] md:text-[11rem] lg:text-[16rem] xl:text-[18rem] font-bold uppercase tracking-tighter leading-[0.8] whitespace-nowrap"
         />
 
         {/* ПОДЗАГОЛОВОК */}
@@ -47,16 +29,21 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 1 }}
-            // Твои настройки размеров:
-            className="flex flex-col md:flex-row items-center gap-2 md:gap-4 mt-6 md:mt-4 font-cool text-sm sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-wide text-center"
+            // ИСПРАВЛЕНИЯ ЗДЕСЬ:
+            // 1. justify-center: Самое важное. Центрирует контент по горизонтали и в колонке, и в строке.
+            // 2. items-center: Центрирует элементы относительно друг друга.
+            // 3. w-full: Занимаем всю ширину, чтобы justify-center сработал относительно экрана.
+            className="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mt-6 md:mt-4 font-cool text-lg sm:text-xl md:text-2xl lg:text-3xl uppercase tracking-wide text-center w-full"
         >
-            <span className="opacity-100">Digital solutions for</span>
+            {/* whitespace-nowrap: Чтобы "Digital solutions for" не разбивалось на две строки на узких экранах */}
+            <span className="opacity-100 whitespace-nowrap">Digital solutions for</span>
             
-            <div className="text-accent relative">
+            {/* Обертка для меняющегося текста */}
+            <div className="text-accent relative inline-flex justify-center">
                 <RotatingText
                     texts={['BARS', 'RESTAURANTS', 'CLUBS', 'SPACES']}
-                    // Твои настройки ширины:
-                    mainClassName="overflow-hidden h-[1.15em] w-[110px] sm:w-[160px] md:w-[200px] lg:w-[260px] justify-center md:justify-start"
+                    // mainClassName: justify-center (для мобилок) -> md:justify-start (для десктопа, чтобы прилипало к тексту слева)
+                    mainClassName="overflow-hidden h-[1.15em] w-[150px] sm:w-[160px] md:w-[200px] lg:w-[260px] justify-center md:justify-start"
                     staggerFrom="last"
                     initial={{ y: "100%" }}
                     animate={{ y: 0 }}
@@ -68,22 +55,21 @@ export default function Hero() {
                 />
             </div>
         </motion.div>
-
       </div>
 
-{/* === 3. ИНДИКАТОР СКРОЛЛА (СТРЕЛКА) === */}
+      {/* === ИНДИКАТОР СКРОЛЛА === */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.5, duration: 1 }}
-        // relative z-10: чтобы стрелка была над фоном
-        className="absolute bottom-12 flex flex-col items-center z-10"
+        className="absolute bottom-12 flex flex-col items-center z-10 pointer-events-auto"
       >
-        {/* Обертка для ховер-эффекта */}
-        <div className="p-3 rounded-full transition-colors duration-300 hover:bg-white/10 cursor-pointer">
-            <ChevronDown className="w-8 h-8 text-foreground opacity-80" />
-        </div>
+        <motion.div style={{ opacity }}>
+            <div className="p-3 rounded-full transition-colors duration-300 hover:bg-white/10 cursor-pointer">
+                <ChevronDown className="w-8 h-8 text-foreground opacity-80" />
+            </div>
+        </motion.div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }

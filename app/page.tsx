@@ -1,38 +1,56 @@
-import Hero from "@/components/Hero"; // Импортируем нашу новую шторку
-import AuroraBackground from "@/components/AuroraBackground"; // Можно оставить, если перенастроить цвета
+"use client";
+
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import ColorBends from "@/components/ColorBends"; 
+import RevealCurtain from "@/components/RevealCurtain";
+import Services from "@/components/Services";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    // Глобальный фон БЕЛЫЙ. Штора его перекроет при падении.
-    <div className="relative min-h-screen w-full bg-[#ededed] text-[#050505] font-sans">
+    // Добавил overflow-x-hidden, чтобы исключить горизонтальный скролл на мобильных
+    <main className="relative w-full min-h-screen text-foreground overflow-x-hidden">
       
-      {/* 1. ЧЕРНАЯ ШТОРА (Hero) */}
-      <Hero />
+      {/* 1. ШТОРКА (Самый верхний слой z-[9999]) */}
+      <RevealCurtain />
 
-      {/* 2. БЕЛЫЙ КОНТЕНТ (Появляется при скролле вниз) */}
-      <main className="relative z-10 flex flex-col items-center py-24 px-6">
-        
-        {/* Пример контента "Обо мне" или "Кейс" */}
-        <div className="max-w-4xl w-full flex flex-col gap-12 mt-12">
-           <h2 className="font-heading text-5xl md:text-7xl uppercase leading-tight">
-             We create <span className="text-gray-400">atmosphere</span><br/>
-             not just websites.
-           </h2>
-           
-           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <p className="text-xl leading-relaxed text-gray-600">
-                Ваш сайт — это продолжение вашего интерьера. 
-                Мы переносим физические ощущения в цифровой код.
-                Никаких шаблонов. Только ручная работа.
-              </p>
-              <div className="h-64 bg-gray-200 rounded-lg flex items-center justify-center">
-                 <span className="opacity-30 uppercase font-bold">Project Preview</span>
-              </div>
-           </div>
-        </div>
+      {/* 2. ФОН (FIXED) */}
+      {/* Теперь он жестко прибит к экрану и не участвует в потоке документа.
+          z-0 отправляет его в самый низ.
+          pointer-events-none гарантирует, что он не перехватит клики. */}
+      <div className="fixed inset-0 w-full h-full z-0 opacity-40 pointer-events-none">
+          <ColorBends
+              overlayColor="var(--background)" 
+              frequency={1}
+              parallax={1}
+              noise={0}
+          />
+      </div>
 
-      </main>
-      
-    </div>
+      {/* 3. КОНТЕНТ (SCROLLABLE) */}
+      {/* Убрали -mt-[100vh]. Теперь контент просто лежит поверх фона.
+          z-10 поднимает его над фоном. */}
+      <div className="relative z-10 flex flex-col">
+          
+          <div id="hero">
+            <Hero />  
+          </div>
+          
+          {/* Якорь для About с компенсацией высоты хедера */}
+          <div className="relative">
+            <div id="about" className="absolute top-0 md:-top-10 left-0 w-full h-1" />
+            <About /> 
+          </div>
+          
+          <div className="relative">
+            <div id="services" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
+            <Services />
+          </div>
+          
+          <Footer />
+      </div>
+
+    </main>
   );
 }
