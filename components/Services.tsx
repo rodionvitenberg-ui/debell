@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+// 1. Добавили Variants в импорт
+import { motion, Variants } from "framer-motion";
 import { Check, X, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import AnimatedContent from "./AnimatedContent";
@@ -24,7 +25,8 @@ export default function Services() {
     "Ongoing Marketing & Ads"
   ];
 
-  const lineVariant = {
+  // 2. Явно указали тип : Variants
+  const lineVariant: Variants = {
     hidden: { scaleX: 0, originX: 0 },
     visible: { 
       scaleX: 1, 
@@ -32,7 +34,8 @@ export default function Services() {
     }
   };
 
-  const verticalLineVariant = {
+  // 2. Явно указали тип : Variants
+  const verticalLineVariant: Variants = {
     hidden: { scaleY: 0, originY: 0 },
     visible: { 
       scaleY: 1, 
@@ -41,7 +44,6 @@ export default function Services() {
   };
 
   return (
-    // ИЗМЕНЕНИЕ: pt-0 (было py-24). Убрали верхний отступ, чтобы подтянуть блок выше.
     <section className="relative z-10 min-h-screen w-full flex flex-col justify-center px-4 md:px-10 pt-0 pb-24 text-foreground">
       
       {/* === ГЛАВНЫЙ КОНТЕЙНЕР === */}
@@ -141,7 +143,6 @@ export default function Services() {
             <div className="grid grid-cols-1 lg:grid-cols-2">
                 
                 {/* TIMELINE */}
-                {/* ИЗМЕНЕНИЕ: border-b (мобилка) и lg:border-r (десктоп). Это создает границу между Timeline и Price. */}
                 <div className="p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col justify-center">
                         <span className="font-mono text-xs text-white/40 uppercase tracking-widest mb-2 block">
                             Estimated Timeline
