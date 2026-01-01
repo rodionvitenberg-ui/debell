@@ -21,7 +21,6 @@ export default function Home() {
           pointer-events-none гарантирует, что он не перехватит клики. */}
       <div className="fixed inset-0 w-full h-full z-0 opacity-40 pointer-events-none">
           <ColorBends
-              overlayColor="var(--background)" 
               frequency={1}
               parallax={1}
               noise={0}

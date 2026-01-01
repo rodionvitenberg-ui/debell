@@ -69,7 +69,6 @@ export default function Contact() {
       <div className="fixed inset-0 z-0 overflow-hidden opacity-40 pointer-events-none">
           <ColorBends
               colors={["#c7c4c4", "#e0e0e0", "#b3b3b3"]}
-              overlayColor="var(--background)" 
               frequency={1}
               parallax={1}
               noise={0} 
