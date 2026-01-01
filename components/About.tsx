@@ -38,13 +38,29 @@ const SimulatedChat = () => {
 export default function About() {
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // ИСПРАВЛЕННАЯ ФУНКЦИЯ
   const handleMouseEnter = () => {
-    if (videoRef.current) videoRef.current.play();
+    if (videoRef.current) {
+      // Сохраняем промис воспроизведения
+      const playPromise = videoRef.current.play();
+
+      // Если браузер вернул промис (современные браузеры)
+      if (playPromise !== undefined) {
+        playPromise.catch((error) => {
+          // Игнорируем ошибку прерывания (AbortError), 
+          // которая возникает при быстром уводе мыши.
+          // Это штатная ситуация, просто глушим ошибку в консоли.
+        });
+      }
+    }
   };
 
   const handleMouseLeave = () => {
     if (videoRef.current) {
       videoRef.current.pause();
+      // Опционально: можно не сбрасывать время в 0, если хочешь, 
+      // чтобы при повторном наведении видео продолжалось, а не начиналось сначала.
+      // Но если нужно с начала — оставляй как есть:
       videoRef.current.currentTime = 0;
     }
   };
@@ -55,7 +71,6 @@ export default function About() {
     <section className="relative z-10 min-h-screen w-full flex flex-col justify-center px-4 md:px-10 py-24 text-foreground">
       
       {/* === ВЕРХНЯЯ ЧАСТЬ: МАНИФЕСТ === */}
-      {/* ИЗМЕНЕНИЕ: Уменьшили отступ снизу (mb-8 md:mb-12 вместо mb-16 md:mb-24) */}
       <div className="w-full max-w-4xl mx-auto mb-8 md:mb-12">
         <AnimatedContent
            distance={50}
@@ -68,7 +83,6 @@ export default function About() {
             to digital reality, cutting through the noise of unnecessary management. 
             No committees, no waiting, no excuses.
             
-            {/* Слоган внутри текста */}
             <span className="ml-2 font-bold uppercase bg-gradient-to-r from-[#d28f13] via-[#f2ecec] to-[#1c9e45] bg-clip-text text-transparent">
               1 man - 1 decision.
             </span>
@@ -94,6 +108,7 @@ export default function About() {
                 muted
                 loop
                 playsInline
+                src="/videos/project-showcase.mp4"
                 className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-90 transition-opacity duration-700 grayscale group-hover:grayscale-0"
             />
             
