@@ -183,7 +183,7 @@ export function RadialFlow({
             <path
               key={`path-${topic.id}`}
               d={getPathData(topic)}
-              stroke={topic.highlighted ? topic.color : "#5c0505ff"}
+              stroke={topic.highlighted ? topic.color : "#374151"}
               strokeWidth="1"
               strokeOpacity={topic.highlighted ? 0.4 : 0.2}
               fill="none"

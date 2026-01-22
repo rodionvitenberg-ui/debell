@@ -44,7 +44,7 @@ export default function Services() {
   };
 
   return (
-    <section className="relative z-10 min-h-screen w-full flex flex-col justify-center px-4 md:px-10 pt-0 pb-24 text-foreground">
+    <section className="relative z-10 min-h-screen w-full flex flex-col justify-center px-4 md:px-10 pt-20 pb-24 text-foreground">
       
       {/* === ГЛАВНЫЙ КОНТЕЙНЕР === */}
       <div className="relative w-full max-w-7xl mx-auto rounded-3xl border border-white/10 overflow-hidden shadow-2xl bg-[#0a0a0a]">
@@ -170,7 +170,7 @@ export default function Services() {
                             </div>
 
                             <Link 
-                                href="mailto:contact@debell.dev?subject=Standard%20Site%20Inquiry" 
+                                href="mailto:rodionvitenberg@gmail.com" 
                                 className="group inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-black font-bold uppercase tracking-wider text-sm hover:bg-accent transition-colors duration-300 rounded-sm w-full md:w-auto"
                             >
                                 Start Project

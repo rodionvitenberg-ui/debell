@@ -29,7 +29,7 @@ export default function RevealCurtain() {
                 transition={{ duration: 0.5, delay: 0 }}
                 className="font-heading text-6xl md:text-9xl font-extrabold tracking-tighter text-black uppercase inline-block"
             >
-                DEBELL
+                RV Studio
             </motion.h1>
         </div>
     </motion.div>

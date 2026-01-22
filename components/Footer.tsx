@@ -24,11 +24,11 @@ export default function Footer() {
             
             {/* Огромная ссылка на почту */}
             <Link 
-                href="mailto:contact@debell.dev"
+                href="mailto:rodionvitenberg@gmail.com"
                 className="group relative inline-block"
             >
                 <span className="font-heading text-5xl md:text-8xl lg:text-9xl font-bold uppercase text-white leading-none transition-colors duration-300 group-hover:text-accent">
-                    DEBELL<br className="md:hidden"/> AHUELL
+                    RVSTUDIO<br className="md:hidden"/>
                 </span>
                 
                 {/* Иконка стрелки, появляющаяся при наведении (для десктопа) */}
@@ -45,7 +45,7 @@ export default function Footer() {
                     DIGITAL POSSESSION
                 </span>
                 <p className="text-white/30 text-sm">
-                    © {currentYear} Debell.Dev. All rights reserved.
+                    © {currentYear} RVStudio. All rights reserved.
                 </p>
             </div>
 

@@ -19,7 +19,7 @@ export default function Home() {
       {/* Теперь он жестко прибит к экрану и не участвует в потоке документа.
           z-0 отправляет его в самый низ.
           pointer-events-none гарантирует, что он не перехватит клики. */}
-      <div className="fixed inset-0 w-full h-full z-0 opacity-40 pointer-events-none">
+      <div className="fixed inset-0 w-full h-full z-0 opacity-20 pointer-events-none">
           <ColorBends
               frequency={1}
               parallax={1}

@@ -15,7 +15,7 @@ const CabinetGtotesk = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "DEBELL",
+  title: "RV Studio",
   description: "Digital Architecture",
 };
 
