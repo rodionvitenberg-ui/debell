@@ -37,7 +37,7 @@ export default function RootLayout({
         {/* pointer-events-none: чтобы сквозь него можно было кликать */}
         {/* backdrop-blur-sm: сила размытия */}
         {/* mask-image: градиент, чтобы размытие плавно сходило на нет вверх */}
-        <div className="fixed bottom-0 left-0 w-full h-24 z-50 pointer-events-none backdrop-blur-[2px] [mask-image:linear-gradient(to_top,black,transparent)]" />
+        <div className="fixed bottom-0 left-0 w-full h-24 z-50 pointer-events-none backdrop-blur-[30px] [mask-image:linear-gradient(to_top,black,transparent)]" />
         
       </body>
     </html>

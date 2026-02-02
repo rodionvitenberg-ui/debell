@@ -2,7 +2,7 @@
 
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-import ColorBends from "@/components/ColorBends"; 
+// import ColorBends from "@/components/ColorBends"; // Пока скроем, чтобы не тянул ресурсы
 import RevealCurtain from "@/components/RevealCurtain";
 import Services from "@/components/Services";
 import Footer from "@/components/Footer";
@@ -15,21 +15,14 @@ export default function Home() {
       {/* 1. ШТОРКА (Самый верхний слой z-[9999]) */}
       <RevealCurtain />
 
-      {/* 2. ФОН (FIXED) */}
-      {/* Теперь он жестко прибит к экрану и не участвует в потоке документа.
-          z-0 отправляет его в самый низ.
-          pointer-events-none гарантирует, что он не перехватит клики. */}
-      <div className="fixed inset-0 w-full h-full z-0 opacity-20 pointer-events-none">
-          <ColorBends
-              frequency={1}
-              parallax={1}
-              noise={0}
-          />
-      </div>
+      {/* 2. ФОН (FIXED) -> ТЕПЕРЬ СПЛОШНОЙ SECONDARY */}
+      {/* Заменили ColorBends на сплошную заливку bg-secondary.
+          Убрали opacity-20, иначе фон будет прозрачным.
+      */}
+      <div className="fixed inset-0 w-full h-full z-0 bg-secondary pointer-events-none" />
 
       {/* 3. КОНТЕНТ (SCROLLABLE) */}
-      {/* Убрали -mt-[100vh]. Теперь контент просто лежит поверх фона.
-          z-10 поднимает его над фоном. */}
+      {/* Z-10 поднимает контент над фоном */}
       <div className="relative z-10 flex flex-col">
           
           <div id="hero">

@@ -1,5 +1,6 @@
 import React, { useLayoutEffect, useRef, useEffect } from 'react';
 import { gsap } from 'gsap';
+import Image from "next/image";
 
 export interface StaggeredMenuItem {
   label: string;
@@ -47,6 +48,7 @@ export default function StaggeredMenu({
   displaySocials = true,
   displayItemNumbering = true,
   className = '',
+  logoUrl,
   closeOnClickAway = true,
   onMenuOpen,
   onMenuClose,
@@ -65,6 +67,15 @@ export default function StaggeredMenu({
         ease: 'power4.inOut',
         stagger: 0.05, 
       });
+
+      if (logoUrl) {
+        tl.current.to('.sm-logo', {
+            y: 0,
+            opacity: 1,
+            duration: 0.6,
+            ease: 'power3.out',
+        }, '-=0.4'); // Начинаем чуть раньше окончания анимации панели
+      }
 
       tl.current.to(
         '.sm-panel-item',
@@ -94,7 +105,7 @@ export default function StaggeredMenu({
     }, containerRef);
 
     return () => ctx.revert();
-  }, [displaySocials]);
+  }, [displaySocials, logoUrl]);
 
   useEffect(() => {
     if (isOpen) {
@@ -142,7 +153,17 @@ export default function StaggeredMenu({
             style={{ backgroundColor: color }}
           >
             {index === colors.length - 1 && (
-              <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-8 overflow-hidden">
+              <div className="absolute inset-0 flex flex-col justify-center px-6 md:px-10 overflow-hidden">
+                {logoUrl && (
+                    <div className="sm-logo relative mb-20 w-40 h-16 transform translate-y-10 opacity-0 self-start ml-6 md:ml-0 md:self-start">
+                        <Image 
+                            src={logoUrl} 
+                            alt="Menu Logo" 
+                            fill
+                            className="object-contain object-center scale-400 md:px-12"
+                        />
+                    </div>
+                )}
                 
                 <nav className="flex flex-col gap-2">
                   <ul className="sm-panel-list flex flex-col gap-3" data-numbering={displayItemNumbering ? "true" : undefined}>
@@ -150,7 +171,7 @@ export default function StaggeredMenu({
                       <li key={idx} className="overflow-hidden">
                          <a 
                            href={item.link} 
-                           className="sm-panel-item block text-3xl md:text-4xl font-bold uppercase text-white hover:text-white/80 transition-colors transform translate-y-20 opacity-0"
+                           className="sm-panel-item block text-3xl md:text-4xl font-bold uppercase text-white hover:text-accent transition-colors transform translate-y-20 opacity-0"
                            // Передаем событие и ссылку в наш новый обработчик
                            onClick={(e) => handleLinkClick(e, item.link)}
                            aria-label={item.ariaLabel}
@@ -170,7 +191,7 @@ export default function StaggeredMenu({
                         href={item.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="sm-social-link text-white/60 hover:text-white text-xs uppercase tracking-widest transform translate-y-10 opacity-0 transition-colors"
+                        className="sm-social-link text-white hover:text-accent text-xs uppercase tracking-widest transform translate-y-10 opacity-0 transition-colors"
                       >
                         {item.label}
                       </a>
