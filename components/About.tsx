@@ -1,186 +1,43 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useState, useEffect, useRef } from "react";
-import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react"; 
-import { BackgroundPaths } from "@/components/ui/background-paths";
-import AnimatedContent from "./AnimatedContent";
-import CardSwap, { Card } from "./CardSwap";
-
-const SimulatedChat = () => {
-  const [replayKey, setReplayKey] = useState(0);
-  const messages = [
-    { id: 1, text: "Can we change the header color?", isMe: false, delay: 0.5 },
-    { id: 2, text: "Done. Check production.", isMe: true, delay: 2.5 },
-    { id: 3, text: "Wait, that was fast. Thanks!", isMe: false, delay: 4.5 },
-  ];
-
-  useEffect(() => {
-    // Длительность всей анимации сообщений: ~3 секунды (последнее выходит на 2.5с)
-    // Пауза, которую ты просил: 5 секунд
-    // Итого интервал: 3000 + 5000 = 8000 мс
-    const interval = setInterval(() => {
-      setReplayKey((prev) => prev + 1);
-    }, 8000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="w-full flex flex-col gap-3 mt-6 px-2">
-      {/* Ключ (key) находится здесь. Когда он меняется, 
-         React "перерисовывает" всё содержимое div-а заново.
-      */}
-      <div key={replayKey} className="flex flex-col gap-3 w-full">
-        {messages.map((msg) => (
-          <motion.div
-            key={msg.id}
-            // Важно: используем animate, а не whileInView, 
-            // чтобы цикл работал даже если мы не скроллим страницу
-            initial={{ opacity: 0, x: msg.isMe ? 20 : -20, scale: 0.9 }}
-            animate={{ opacity: 1, x: 0, scale: 1 }}
-            transition={{ delay: msg.delay, duration: 0.4 }}
-            className={`relative max-w-[80%] p-3 rounded-2xl text-xs md:text-sm font-medium ${
-              msg.isMe 
-                ? "self-end bg-accent text-black rounded-tr-sm" 
-                : "self-start bg-white/10 text-white rounded-tl-sm"
-            }`}
-          >
-            {msg.text}
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-};
+import ScrambledText from "./ScrambledText";
 
 export default function About() {
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  // ИСПРАВЛЕННАЯ ФУНКЦИЯ
-  const handleMouseEnter = () => {
-    if (videoRef.current) {
-      // Сохраняем промис воспроизведения
-      const playPromise = videoRef.current.play();
-
-      // Если браузер вернул промис (современные браузеры)
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // Игнорируем ошибку прерывания (AbortError), 
-          // которая возникает при быстром уводе мыши.
-          // Это штатная ситуация, просто глушим ошибку в консоли.
-        });
-      }
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (videoRef.current) {
-      videoRef.current.pause();
-      // Опционально: можно не сбрасывать время в 0, если хочешь, 
-      // чтобы при повторном наведении видео продолжалось, а не начиналось сначала.
-      // Но если нужно с начала — оставляй как есть:
-      videoRef.current.currentTime = 0;
-    }
-  };
-
-  const windowStyle = "relative rounded-3xl border border-white/10 bg-[rgba(0,0,0,0.7)] backdrop-blur-md overflow-hidden transition-colors duration-500 hover:border-white/20";
+  const textSizeClasses = "font-bold md:font-cool text-[1.4rem] sm:text-xl md:text-2xl lg:text-3xl leading-[1.0] md:leading-[1.1] tracking-tight md:tracking-normal";
 
   return (
-    <section className="relative z-10 min-h-screen w-full flex flex-col justify-center px-4 md:px-10 py-24 text-foreground">
+    <section className="relative w-full pt-0 pb-10 md:py-20 bg-secondary overflow-hidden">
       
-      {/* === ВЕРХНЯЯ ЧАСТЬ: МАНИФЕСТ === */}
-      <div className="w-full max-w-4xl mx-auto mb-8 md:mb-20">
-        <AnimatedContent
-           distance={50}
-           direction="vertical"
-           duration={0.8}
-           // items-center центрирует блок, но мы переопределим это для текста ниже
-           className={`flex flex-col items-center p-8 md:p-9 ${windowStyle}`}
-        >
-          {/* text-left: текст слева. w-full: чтобы занимал всю ширину контейнера */}
-          <p className="font-cool text-lg md:text-2xl leading-relaxed text-left w-full mb-6">
-            Complex hierarchy kills creativity. I offer a direct path from your vision
-            to digital reality, cutting through the noise of unnecessary management.
-            No committees, no waiting, no excuses.
-          </p>
+      <div className="container mx-auto px-4">
+        <div className="flex flex-col items-center gap-5 md:gap-10 mt-4 md:mt-0">
           
-          {/* Слоган оставляем по центру для эффекта "печати" или подписи */}
-          <span className="p-2 text-xl md:text-4xl font-bold uppercase bg-gradient-to-r from-[#d28f13] via-[#f2ecec] to-[#1c9e45] bg-clip-text text-transparent text-center">
-              One man - one decision.
-          </span>
-        </AnimatedContent>
-      </div>
-
-      {/* === НИЖНЯЯ ЧАСТЬ: АСИММЕТРИЧНАЯ СЕТКА === */}
-      <div className="w-full max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6 h-auto lg:h-[600px]">
-        
-        {/* === ЛЕВАЯ КОЛОНКА (ЧАТ + КНОПКА) === */}
-        {/* Теперь идет первой в потоке (order-1) и занимает 1 часть ширины */}
-        <div className="order-1 lg:col-span-1 flex flex-col gap-6 h-full">
-            
-            {/* 1. ЧАТ */}
-            <AnimatedContent
-                distance={150}
-                direction="horizontal"
-                reverse={false} 
-                duration={1}
-                delay={0.1}
-                className={`flex-1 p-6 flex flex-col ${windowStyle}`}
+          {/* Абзац 1 (Статика) */}
+          <div className={`w-full max-w-5xl font-cool text-accent-foreground text-left ${textSizeClasses}`}>
+            <ScrambledText
+              radius={70}
+              duration={1.9}
+              speed={0.7}
+              scrambleChars=".:"
             >
-                <span className="absolute top-6 left-6 text-xs text-white/40 uppercase tracking-widest font-bold">
-                    Direct Connection
-                </span>
+              Проектируем и запускаем сложные веб-системы, которые превращают хаос в прибыль и приводят новых клиентов. <br /> Внедряем стандарты мирового веба от Иссык-Куля до Оша.
+            </ScrambledText>
+          </div>
 
-                <div className="flex-1 flex items-center justify-center mt-4">
-                    <SimulatedChat />
-                </div>
-            </AnimatedContent>
-
-            {/* 2. FULL STACK + КНОПКА */}
-            <AnimatedContent
-                distance={150}
-                direction="horizontal"
-                reverse={false}
-                duration={1}
-                delay={0.2}
-                className={`flex-1 p-8 flex flex-col ${windowStyle} relative`}
+          {/* Абзац 2 (Статика) */}
+          <div className={`w-full max-w-5xl font-cool text-accent-foreground text-left ${textSizeClasses}`}>
+            <ScrambledText
+              radius={70}
+              duration={1.9}
+              speed={0.7}
+              scrambleChars=".:"
             >
-                <div className="absolute inset-0 z-0 opacity-30 pointer-events-none">
-                    <BackgroundPaths />
-                </div>
-
-                <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-transparent z-10" />
-
-                <div className="relative z-20 flex flex-col items-start h-full">
-                    <div className="flex gap-4 mb-4 text-accent">
-                    </div>
-                    
-                    <h3 className="text-xl font-heading font-bold uppercase text-white mb-3">
-                        Versatile Developer
-                    </h3>
-                    
-                    <p className="text-sm text-white/60 leading-relaxed mb-6">
-                        I bridge the gap between backend logic and frontend aesthetics. 
-                        Capable of building complex server architectures and pixel-perfect web designs simultaneously.
-                    </p>
-
-                    <Link 
-                      href="/contact"
-                      scroll={true} 
-                      className="group/btn inline-flex items-center gap-2 px-5 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 text-sm font-medium uppercase tracking-wider"
-                    >
-                      Contact now
-                    </Link>
-                </div>
-            </AnimatedContent>
+              Мы не рисуем просто красивые сайты, а создаем инструменты. Наш подход - точность и надежность, помноженные на понимание современного рынка. Мы здесь, чтобы доказать:<br /> в Кыргызстане могут и делают продукты мирового уровня.
+            </ScrambledText>
+          </div>
 
         </div>
-
       </div>
 
-    
     </section>
   );
 }

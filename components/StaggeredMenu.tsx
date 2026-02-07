@@ -42,7 +42,7 @@ export default function StaggeredMenu({
   onClose,
   onItemClick, // Получаем проп
   position = 'right',
-  colors = ['#121212'], 
+  colors = ['#0f0f0f'],
   menuItems = [],
   socialItems = [],
   displaySocials = true,

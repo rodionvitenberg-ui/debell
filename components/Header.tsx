@@ -19,8 +19,9 @@ const menuItems = [
 ];
 
 const socialItems = [
-  { label: 'GitHub', link: 'https://github.com/rodionvitenberg-ui/' },
-  { label: 'LinkedIn', link: 'https://www.linkedin.com/in/rodion-vitenberg-4200363a4/' }
+  { label: 'Telegram', link: 'https://github.com/rodionvitenberg-ui/' },
+  { label: 'Instagram', link: 'https://www.linkedin.com/in/rodion-vitenberg-4200363a4/' },
+  { label: 'Whatsapp', link: 'https://www.linkedin.com/in/rodion-vitenberg-4200363a4/' }
 ];
 
 export default function Header() {
@@ -95,7 +96,7 @@ export default function Header() {
         variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 left-0 z-[60] w-full flex items-center justify-between px-6 py-2 md:px-12 bg-accent-foreground/95 pointer-events-auto shadow-sm transform-gpu isolation-auto"
+        className="fixed top-0 left-0 z-[60] w-full flex items-center justify-between px-6 py-2 md:px-12 bg-background pointer-events-auto shadow-sm transform-gpu isolation-auto"
       >
         
         {/* === LOGO (DESKTOP) === */}
@@ -201,8 +202,6 @@ export default function Header() {
         onItemClick={(link) => handleTransition(null, link)}
         menuItems={menuItems}
         socialItems={socialItems}
-        // Передаем цвет, хотя лучше задать классом внутри самого компонента
-        colors={['#171717']}
         logoUrl="/logo.png" 
       />
     </>

@@ -2,42 +2,60 @@
 
 import Hero from "@/components/Hero";
 import About from "@/components/About";
-// import ColorBends from "@/components/ColorBends"; // Пока скроем, чтобы не тянул ресурсы
-import RevealCurtain from "@/components/RevealCurtain";
+import AboutTeam from "@/components/AboutTeam";
+import Portfolio from "@/components/Portfolio";
+import OurMission from "@/components/OurMission";
 import Services from "@/components/Services";
+import FAQ from "@/components/FAQ";
+import RevealCurtain from "@/components/RevealCurtain";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    // Добавил overflow-x-hidden, чтобы исключить горизонтальный скролл на мобильных
-    <main className="relative w-full min-h-screen text-foreground overflow-x-hidden">
+    // УБРАЛ overflow-x-hidden, чтобы заработал sticky в Services
+    <main className="relative w-full min-h-screen text-foreground bg-secondary">
       
-      {/* 1. ШТОРКА (Самый верхний слой z-[9999]) */}
+      {/* 1. ШТОРКА */}
       <RevealCurtain />
 
-      {/* 2. ФОН (FIXED) -> ТЕПЕРЬ СПЛОШНОЙ SECONDARY */}
-      {/* Заменили ColorBends на сплошную заливку bg-secondary.
-          Убрали opacity-20, иначе фон будет прозрачным.
-      */}
+      {/* 2. ФОН */}
       <div className="fixed inset-0 w-full h-full z-0 bg-secondary pointer-events-none" />
 
-      {/* 3. КОНТЕНТ (SCROLLABLE) */}
-      {/* Z-10 поднимает контент над фоном */}
+      {/* 3. КОНТЕНТ */}
       <div className="relative z-10 flex flex-col">
           
           <div id="hero">
             <Hero />  
           </div>
           
-          {/* Якорь для About с компенсацией высоты хедера */}
           <div className="relative">
             <div id="about" className="absolute top-0 md:-top-10 left-0 w-full h-1" />
             <About /> 
           </div>
+
+          <div className="relative">
+            <AboutTeam /> 
+          </div>
           
           <div className="relative">
-            <div id="services" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
-            <Services />
+            <div id="portfolio" className="absolute top-0 md:-top-10 left-0 w-full h-1" />
+            <Portfolio /> 
+          </div>
+
+          <div className="relative">
+            <div id="mission" className="absolute top-0 md:-top-10 left-0 w-full h-1" />
+            <OurMission /> 
+          </div>
+          
+          {/* СЕКЦИЯ УСЛУГ */}
+          <div className="relative">
+             <div id="services" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
+             <Services />
+          </div>
+
+          <div className="relative">
+             <div id="FAQ" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
+             <FAQ />
           </div>
           
           <Footer />

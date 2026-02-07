@@ -1,0 +1,108 @@
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
+import { SplitText } from 'gsap/SplitText';
+import { ScrambleTextPlugin } from 'gsap/ScrambleTextPlugin';
+
+gsap.registerPlugin(SplitText, ScrambleTextPlugin);
+
+export interface ScrambledTextProps {
+  radius?: number;
+  duration?: number;
+  speed?: number;
+  scrambleChars?: string;
+  className?: string;
+  style?: React.CSSProperties;
+  children: React.ReactNode;
+}
+
+const ScrambledText: React.FC<ScrambledTextProps> = ({
+  radius = 100,
+  duration = 1.2,
+  speed = 0.5,
+  scrambleChars = '.:',
+  className = '',
+  style = {},
+  children
+}) => {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (!rootRef.current) return;
+
+    const p = rootRef.current.querySelector('p');
+    if (!p) return;
+
+    // 1. Разбиваем текст
+    const split = SplitText.create(p, {
+      type: 'words, chars',
+      charsClass: 'inline-block will-change-transform',
+      wordsClass: 'inline-block whitespace-nowrap', // Запрет переноса внутри слова
+      reduceWhiteSpace: false
+    });
+
+    // 2. ФИКСАЦИЯ ШИРИНЫ (The Fix)
+    // Проходим по всем буквам и замораживаем их ширину
+    if (split.chars) {
+      split.chars.forEach((char) => {
+        const c = char as HTMLElement;
+        // Берем текущую вычисленную ширину буквы
+        const w = c.getBoundingClientRect().width;
+        
+        // Жестко задаем эту ширину стилем
+        c.style.width = `${w}px`;
+        // Центрируем контент внутри этой фиксированной ширины, 
+        // чтобы узкие символы (точки) стояли посередине места от широкой буквы
+        c.style.textAlign = 'center'; 
+      });
+    }
+
+    // 3. Сохраняем оригинальный контент
+    split.chars.forEach(el => {
+      const c = el as HTMLElement;
+      gsap.set(c, { attr: { 'data-content': c.innerHTML } });
+    });
+
+    const handleMove = (e: PointerEvent) => {
+      split.chars.forEach(el => {
+        const c = el as HTMLElement;
+        const { left, top, width, height } = c.getBoundingClientRect();
+        const dx = e.clientX - (left + width / 2);
+        const dy = e.clientY - (top + height / 2);
+        const dist = Math.hypot(dx, dy);
+
+        if (dist < radius) {
+          gsap.to(c, {
+            overwrite: true,
+            duration: duration * (1 - dist / radius),
+            scrambleText: {
+              text: c.dataset.content || '',
+              chars: scrambleChars,
+              speed
+            },
+            ease: 'none'
+          });
+        }
+      });
+    };
+
+    const el = rootRef.current;
+    el.addEventListener('pointermove', handleMove);
+
+    return () => {
+      el.removeEventListener('pointermove', handleMove);
+      split.revert();
+    };
+  }, [radius, duration, speed, scrambleChars]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={` font-sans text-background ${className}`}
+      style={style}
+    >
+      <p>{children}</p>
+    </div>
+  );
+};
+
+export default ScrambledText;
