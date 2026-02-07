@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Plus } from "lucide-react";
 import Image from "next/image";
 
@@ -54,40 +54,60 @@ export default function FAQ() {
             </h2>
           </div>
 
-          {/* УБРАЛИ LayoutGroup. Используем обычный флекс */}
-          <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch">
-              
-              {/* ЛЕВАЯ КОЛОНКА */}
-              <div className="flex-1 flex flex-col gap-4">
-                  {faqData.map((item) => (
-                      <FAQItem 
-                        key={item.id} 
-                        item={item} 
-                        isOpen={openItems.includes(item.id)}
-                        toggle={() => toggleItem(item.id)}
-                      />
-                  ))}
-              </div>
-
-              {/* ПРАВАЯ КОЛОНКА */}
-              {/* УБРАЛИ motion.div layout. Сделали sticky через CSS — это дешевле для браузера */}
-              <div className="hidden lg:block w-[40%] relative min-h-[500px]">
-                  <div className="sticky top-24 w-full h-[600px] rounded-[2.5rem] overflow-hidden bg-background translate-z-0">
-                      <Image 
-                        src="/art1.jpg"
-                        alt="FAQ Art"
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 40vw"
-                        className="object-cover opacity-80" 
-                        // Приоритет загрузки, чтобы не мигало
-                        priority
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80 pointer-events-none" />
-                      {/* ... декор ... */}
+          {/* LayoutGroup помогает плавно анимировать изменения высоты */}
+          <LayoutGroup>
+              <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch">
+                  
+                  {/* ЛЕВАЯ КОЛОНКА */}
+                  <div className="flex-1 flex flex-col gap-4">
+                      {faqData.map((item) => (
+                          <FAQItem 
+                            key={item.id} 
+                            item={item} 
+                            isOpen={openItems.includes(item.id)}
+                            toggle={() => toggleItem(item.id)}
+                          />
+                      ))}
                   </div>
-              </div>
 
-          </div>
+                  {/* ПРАВАЯ КОЛОНКА */}
+                  <motion.div 
+                    layout 
+                    className="hidden lg:block w-[40%] relative min-h-[500px]"
+                  >
+                      {/* Убрали sticky, теперь h-full растягивает блок на всю высоту соседей */}
+                      <div className="w-full h-full rounded-[2.5rem] overflow-hidden bg-background relative translate-z-0">
+                          
+                          <Image 
+                            src="/art1.jpg"
+                            alt="FAQ Art"
+                            fill
+                            // Оптимизация: грузим картинку нужного размера
+                            sizes="(max-width: 1024px) 100vw, 40vw"
+                            // Оптимизация: отключаем тяжелую анимацию scale при наведении
+                            className="object-cover opacity-80" 
+                          />
+                          
+                          {/* Затемнение */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80 pointer-events-none" />
+
+                          {/* Декор */}
+                          <div className="absolute bottom-10 left-10 max-w-[250px] z-10 pointer-events-none">
+                              <p className="text-white/90 font-mono text-sm leading-relaxed">
+                                 Остались вопросы? 
+                                 <br/>
+                                 <span className="text-accent cursor-pointer hover:underline mt-2 block pointer-events-auto">
+                                    Свяжитесь с нами
+                                 </span>
+                              </p>
+                          </div>
+
+                      </div>
+                  </motion.div>
+
+              </div>
+          </LayoutGroup>
+
       </div>
     </section>
   );
@@ -95,7 +115,8 @@ export default function FAQ() {
 
 function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle: () => void }) {
     return (
-        <div // Заменили motion.div на div (убрали layout prop)
+        <motion.div 
+            layout 
             onClick={toggle}
             className={`
                 group cursor-pointer border border-white/10 rounded-[1.5rem] p-6 md:p-8 
@@ -103,7 +124,7 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
                 ${isOpen ? 'bg-[#1a1a1a] border-white/20' : ''}
             `}
         >
-            <div className="flex justify-between items-start gap-4">
+            <motion.div layout className="flex justify-between items-start gap-4">
                 <div className="flex gap-4 md:gap-6 items-start">
                     <span className="font-mono text-accent/50 text-sm mt-1">
                         {item.id}
@@ -123,16 +144,15 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
                 `}>
                    <Plus className="w-4 h-4" />
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Анимируем только контент внутри */}
-            <AnimatePresence initial={false}>
+            <AnimatePresence>
                 {isOpen && (
                     <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: "auto" }}
                         exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }} // Apple-style easing
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
                         <p className="pt-6 pl-0 md:pl-[3.5rem] text-base md:text-lg text-white/50 leading-relaxed max-w-2xl">
@@ -141,6 +161,6 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
                     </motion.div>
                 )}
             </AnimatePresence>
-        </div>
+        </motion.div>
     );
 }

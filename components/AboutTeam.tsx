@@ -53,7 +53,7 @@ export default function AboutTeam() {
                     contour={0.2}
                     lightColor="#66812c"   // Ваш акцентный цвет
                     darkColor="#131313"
-                    tintColor="#6d6d6d"
+                    tintColor="#b8b8b8c0"
                 />
               </div>
 

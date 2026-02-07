@@ -7,6 +7,7 @@ import Portfolio from "@/components/Portfolio";
 import OurMission from "@/components/OurMission";
 import Services from "@/components/Services";
 import FAQ from "@/components/FAQ";
+import ContactSection from "@/components/ContactSection";
 import RevealCurtain from "@/components/RevealCurtain";
 import Footer from "@/components/Footer";
 
@@ -57,6 +58,12 @@ export default function Home() {
              <div id="FAQ" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
              <FAQ />
           </div>
+
+          <div className="relative">
+             <div id="ContactSection" className="absolute top-0 md:-top-5 left-0 w-full h-1" />
+             <ContactSection />
+          </div>
+          
           
           <Footer />
       </div>

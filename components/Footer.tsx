@@ -7,20 +7,18 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { label: "GitHub", href: "https://github.com/rodionvitenberg-ui/" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/rodion-vitenberg-4200363a4/" },
+    { label: "Telegram", href: "https://github.com/rodionvitenberg-ui/" },
+    { label: "Instagram", href: "https://www.linkedin.com/in/rodion-vitenberg-4200363a4/" },
+    { label: "WhatsApp", href: "https://www.linkedin.com/in/rodion-vitenberg-4200363a4/" },
   ];
 
   return (
-    <footer className="relative z-20 w-full bg-black border-t border-white/10 pt-20 pb-10 px-4 md:px-10">
+    <footer className="relative z-20 w-full bg-background border-t border-white/10 pt-20 pb-10 px-4 md:px-10">
       
       <div className="max-w-7xl mx-auto flex flex-col justify-between min-h-[40vh]">
         
         {/* === ВЕРХНЯЯ ЧАСТЬ: CALL TO ACTION === */}
         <div className="flex flex-col items-start">
-            <span className="font-mono text-xs md:text-sm text-white/40 uppercase tracking-widest mb-6 block">
-                Ready to initiate?
-            </span>
             
             {/* Огромная ссылка на почту */}
             <Link 
@@ -28,7 +26,7 @@ export default function Footer() {
                 className="group relative inline-block"
             >
                 <span className="font-heading text-5xl md:text-8xl lg:text-9xl font-bold uppercase text-white leading-none transition-colors duration-300 group-hover:text-accent">
-                    RVSTUDIO<br className="md:hidden"/>
+                    IKSOFT<br className="md:hidden"/>
                 </span>
                 
                 {/* Иконка стрелки, появляющаяся при наведении (для десктопа) */}
@@ -41,11 +39,8 @@ export default function Footer() {
             
             {/* Лево: Копирайт */}
             <div className="flex flex-col gap-2">
-                <span className="font-heading text-xl font-bold text-white tracking-widest">
-                    DIGITAL POSSESSION
-                </span>
                 <p className="text-white/30 text-sm">
-                    © {currentYear} RVStudio. All rights reserved.
+                    © {currentYear} IkSoft. All rights reserved.
                 </p>
             </div>
 

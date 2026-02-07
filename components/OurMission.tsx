@@ -90,26 +90,23 @@ export default function OurMission() {
               </p>
 
               <div className="mt-8 md:mt-12 w-full flex justify-center">
-                 <Link href="/contact" passHref>
-                    <motion.button
-                      whileHover={{ scale: 1.02, x: 5 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="group relative flex items-center gap-4 px-6 py-4 bg-background text-white rounded-full font-bold text-lg md:text-xl tracking-wide overflow-hidden shadow-lg hover:shadow-accent/20 transition-all duration-300"
-                    >
-                      {/* Фоновый эффект при наведении (опционально) */}
-                      <div className="absolute inset-0 bg-accent translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out" />
-                      
-                      <span className="relative z-10 group-hover:text-white transition-colors duration-300">
-                        Поговорим о деле
-                      </span>
-                      
-                      <span className="relative z-10 group-hover:text-white group-hover:translate-x-1 transition-all duration-300">
-                        {/* Если нет lucide-react, замени на <svg>...</svg> */}
-                        <ArrowRight className="w-6 h-6" />
-                      </span>
-                    </motion.button>
-                 </Link>
-              </div>
+    <Link href="/contact" passHref>
+    <button
+        className="group relative flex items-center gap-4 px-6 py-4 bg-background text-white rounded-full font-bold text-lg md:text-xl tracking-wide overflow-hidden shadow-lg hover:shadow-accent/20 transition-all duration-300"
+    >
+        
+        {/* ТЕКСТ (z-10 чтобы быть поверх шторки) */}
+        <span className="relative z-10 transition-colors duration-300">
+            Поговорим о деле
+        </span>
+        
+        {/* ИКОНКА (z-10 + небольшой сдвиг стрелки вправо при наведении) */}
+        <span className="relative z-10 group-hover:translate-x-1 transition-transform duration-300">
+            <ArrowRight className="w-6 h-6" />
+        </span>
+    </button>
+    </Link>
+</div>
            </motion.div>
       </div>
 

@@ -1,3 +1,4 @@
+import { useInView } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import {
   Scene,
@@ -269,6 +270,7 @@ export default function FloatingLines({
   mixBlendMode = 'screen'
 }: FloatingLinesProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(containerRef, { margin: "200px" });
   const targetMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const currentMouseRef = useRef<Vector2>(new Vector2(-1000, -1000));
   const targetInfluenceRef = useRef<number>(0);
@@ -434,6 +436,13 @@ export default function FloatingLines({
 
     let raf = 0;
     const renderLoop = () => {
+      // Если компонент не в поле зрения — пропускаем отрисовку
+      if (!isInView) { 
+        // Можно поставить небольшую задержку проверки, но проще просто не рендерить
+        raf = requestAnimationFrame(renderLoop);
+        return; 
+      }
+
       uniforms.iTime.value = clock.getElapsedTime();
 
       if (interactive) {
@@ -486,7 +495,8 @@ export default function FloatingLines({
     bendStrength,
     mouseDamping,
     parallax,
-    parallaxStrength
+    parallaxStrength,
+    isInView
   ]);
 
   return (
