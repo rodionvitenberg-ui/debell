@@ -45,7 +45,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="relative w-full py-20 px-4 md:px-8">
+    <section className="relative w-full py-4 px-4 md:px-8">
       <div className="w-full max-w-7xl mx-auto">
           
           <div className="mb-12 md:mb-16">
@@ -126,9 +126,6 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
         >
             <motion.div layout className="flex justify-between items-start gap-4">
                 <div className="flex gap-4 md:gap-6 items-start">
-                    <span className="font-mono text-accent/50 text-sm mt-1">
-                        {item.id}
-                    </span>
                     <h3 className={`
                         text-lg md:text-xl font-bold uppercase font-cool leading-tight transition-colors
                         ${isOpen ? 'text-white' : 'text-white/60 group-hover:text-white'}

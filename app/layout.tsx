@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Manrope } from "next/font/google"; 
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import localFont from "next/font/local";
 
@@ -38,7 +39,7 @@ export default function RootLayout({
         {/* backdrop-blur-sm: сила размытия */}
         {/* mask-image: градиент, чтобы размытие плавно сходило на нет вверх */}
         <div className="fixed bottom-0 left-0 w-full h-15 z-50 pointer-events-none backdrop-blur-[15px] [mask-image:linear-gradient(to_top,black,transparent)]" />
-        
+       <Footer /> 
       </body>
     </html>
   );

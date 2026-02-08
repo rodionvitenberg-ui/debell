@@ -10,8 +10,8 @@ const allMessages = [
   
   // ГРУППА СООБЩЕНИЙ ОТ АЛЕКСА
   { id: 3, user: "Alex", text: "Супер! Начинаю верстку.", time: "10:25", align: "left", avatar: "/logo2.png" },
-  { id: 4, user: "Alex", text: "Думаю, к вечеру будет готово.", time: "10:25", align: "left", avatar: "/logo2.png", hideAvatar: true },
-  { id: 5, user: "Alex", text: "Скину ссылку в этот чат.", time: "10:26", align: "left", avatar: "/logo2.png", hideAvatar: true },
+  { id: 4, user: "Alex", text: "Думаю, к вечеру будет готово.", time: "10:26", align: "left", avatar: "/logo2.png", hideAvatar: true },
+  { id: 5, user: "Alex", text: "Скину ссылку в этот чат.", time: "10:28", align: "left", avatar: "/logo2.png", hideAvatar: true },
 ];
 
 export default function ChatSimulation() {

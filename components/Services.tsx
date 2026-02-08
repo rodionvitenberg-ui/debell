@@ -5,65 +5,109 @@ import Image from "next/image";
 const cardData = [
   {
     title: "Landing Page",
-    description: "Быстрый старт. Одностраничный сайт с фокусом на конверсию.",
-    img: "/art1.jpg", 
-    tags: ["3-5 дней", "от €500"]
+    description: "Точка входа для вашего трафика. Мы проектируем лендинги с одной целью — превращать посетителей в клиентов. Идеальная структура, цепляющий копирайтинг и дизайн, который бьет точно в цель.",
+    img: "/project1.jpg", 
+    tags: ["High Conversion", "3-5 дней"]
   },
   {
     title: "Corporate Website",
-    description: "Лицо бизнеса. Презентация услуг и кейсов. Удобная админка.",
-    img: "/art1.jpg",
-    tags: ["2-3 недели", "от €1200"]
+    description: "Цифровая штаб-квартира вашего бренда. Мы создаем платформы, которые транслируют ваши ценности и вызывают доверие с первой секунды. Удобная админка, SEO-фундамент и безупречная работа на всех устройствах.",
+    img: "/project2.jpg",
+    tags: ["Brand Identity", "SEO Ready", "7-10 дней"]
   },
   {
     title: "E-Commerce",
-    description: "Магазин 24/7. Каталог, корзина, оплата. Интеграции.",
+    description: "Ваш бизнес работает 24/7. Мы строим мощные интернет-магазины с фокусом на User Journey. От удобного каталога до безопасной оплаты — мы убираем все барьеры между товаром и покупателем.",
     img: "/project3.jpg",
-    tags: ["1.5 мес", "от €2500"]
+    tags: ["Global Sales", "Integrations", "10-14 дней"]
   },
   {
-    title: "Web Application",
-    description: "Сложные сервисы. Уникальная логика (React, Python).",
+    title: "Web Applications",
+    description: "Больше, чем просто сайт. Мы разрабатываем сложные экосистемы: CRM, личные кабинеты, SaaS-решения. Инструменты, которые автоматизируют рутину и помогают вашему бизнесу масштабироваться.",
     img: "/project4.jpg",
-    tags: ["Individual", "NDA"]
+    tags: ["Automation", "React / Python", "~месяц"]
   },
 ];
 
 export default function Services() {
   return (
-    <section className="relative w-full bg-secondary py-20 px-2 md:px-4">
+    <section className="relative w-full bg-secondary py-16 md:py-20 px-4 md:px-4">
       
-      {/* ГЛАВНЫЙ КОНТЕЙНЕР-ОБЕРТКА */}
       <div className="relative w-full max-w-[100%] mx-auto isolate">
          
-         {/* 1. САМА ПОДЛОЖКА (ФОН)
-             absolute inset-0: Растягивается на всю высоту контента.
-             rounded-[2.5rem]: Закругляет углы фона.
-             -z-10: Лежит ПОД контентом.
-         */}
-         <div className="absolute inset-0 bg-background rounded-[2.5rem] -z-10 shadow-2xl" />
+         {/* ПОДЛОЖКА (Только десктоп) */}
+         <div className="hidden md:block absolute inset-0 bg-background rounded-[2.5rem] -z-10 shadow-2xl" />
 
-         {/* 2. ШАПКА БЛОКА */}
-         {/* rounded-t-[2.5rem]: Чтобы верхние углы совпадали с подложкой */}
-         <div className="sticky top-0 z-50 w-full bg-background rounded-t-[2.5rem] rounded-b-[2.5rem] px-6 py-8 md:px-12 md:py-10 h-[180px] flex items-center">
+         {/* ШАПКА БЛОКА (ДЕСКТОПНАЯ)
+            hidden md:flex -> Видна только на компе.
+            На мобилке мы спрятали её, чтобы она не болталась отдельно.
+         */}
+         <div className="hidden md:flex md:sticky md:top-0 z-50 w-full bg-background rounded-t-[2.5rem] rounded-b-[2.5rem] px-12 py-10 h-[180px] items-center mb-0">
              <div className="flex flex-col justify-center w-full">
                 <span className="text-white/50 font-cool text-xs uppercase tracking-widest mb-3 block">
                     Мы знаем, как сделать лучше
                 </span>
-                <h2 className="font-cool text-4xl md:text-6xl text-white font-bold uppercase leading-none">
+                <h2 className="font-cool text-6xl text-white font-bold uppercase leading-none">
                     Наши Услуги:
                 </h2>
              </div>
          </div>
 
-         {/* 3. КОНТЕЙНЕР КАРТОЧЕК */}
-         {/* overflow-clip: Современный аналог hidden, который реже ломает sticky, 
-             но обрезает всё, что вылезает за границы (скругления).
-             rounded-b-[2.5rem]: Важно закруглить низ контейнера.
+         {/* --- МОБИЛЬНАЯ ВЕРСИЯ (Единый блок) --- 
+            Теперь заголовок находится ВНУТРИ этого блока.
          */}
-         <div className="relative w-full pb-0 rounded-b-[2.5rem] overflow-clip">
+         <div className="md:hidden bg-background rounded-[2rem] p-6 flex flex-col gap-8 shadow-2xl">
+            
+            {/* МОБИЛЬНЫЙ ЗАГОЛОВОК (Внутри блока) */}
+            <div className="border-b border-white/10 pb-6">
+                <span className="text-white/50 font-cool text-[10px] uppercase tracking-widest mb-2 block">
+                    Мы знаем, как сделать лучше
+                </span>
+                <h2 className="font-cool text-4xl text-white font-bold uppercase leading-none">
+                    Наши Услуги:
+                </h2>
+            </div>
+
+            {/* СПИСОК УСЛУГ */}
             {cardData.map((card, index) => (
-                <ServiceCard 
+                <div key={index} className="flex flex-col gap-5 border-b border-white/10 pb-8 last:border-0 last:pb-0">
+                    {/* 1. Заголовок */}
+                    <h3 className="text-2xl font-bold text-white uppercase font-cool leading-tight">
+                        {card.title}
+                    </h3>
+
+                    {/* 2. Картинка */}
+                    <div className="relative w-full h-[200px] rounded-xl overflow-hidden bg-[#050505]">
+                        <Image 
+                            src={card.img} 
+                            alt={card.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover opacity-80"
+                        />
+                    </div>
+
+                    {/* 3. Теги */}
+                    <div className="flex flex-wrap gap-2">
+                        {card.tags.map((tag: string, idx: number) => (
+                        <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/50 text-[10px] uppercase tracking-wider">
+                            {tag}
+                        </span>
+                        ))}
+                    </div>
+
+                    {/* 4. Текст */}
+                    <p className="text-sm text-white/60 leading-relaxed">
+                        {card.description}
+                    </p>
+                </div>
+            ))}
+         </div>
+
+         {/* --- ДЕСКТОПНАЯ ВЕРСИЯ КАРТОЧЕК --- */}
+         <div className="hidden md:block relative w-full pb-0 md:rounded-b-[2.5rem] md:overflow-clip">
+            {cardData.map((card, index) => (
+                <DesktopServiceCard 
                     key={index} 
                     card={card} 
                     index={index}
@@ -77,7 +121,8 @@ export default function Services() {
   );
 }
 
-function ServiceCard({ card, index, total }: { card: any, index: number, total: number }) {
+// Компонент только для десктопа
+function DesktopServiceCard({ card, index, total }: { card: any, index: number, total: number }) {
     const topOffset = 180; 
     const isLast = index === total - 1;
 
@@ -89,36 +134,26 @@ function ServiceCard({ card, index, total }: { card: any, index: number, total: 
                 zIndex: index + 1,
             }}
         >
-            {/* ТЕЛО КАРТОЧКИ */}
             <div className={`
-                w-full md:w-[66%] 
+                w-[66%] 
                 min-h-[70vh]
                 bg-background
                 relative overflow-hidden
                 border-t border-white/10
-                
-                /* Скругляем верхний левый угол для стиля "папки" */
-
-                /* ВАЖНО: Если это последняя карточка, скругляем ей низ, 
-                   чтобы она идеально легла в подложку */
                 ${isLast ? 'rounded-br-[2.5rem] border-b-0' : ''}
             `}>
-                <div className="grid grid-cols-1 md:grid-cols-2 h-full min-h-[70vh]">
+                <div className="grid grid-cols-2 h-full min-h-[70vh]">
                     
-                    {/* Левая колонка - Текст */}
-                    <div className="p-8 md:p-12 flex flex-col justify-center relative z-10">
+                    {/* Текст */}
+                    <div className="p-12 flex flex-col justify-center relative z-10">
                         <div className="flex items-center justify-between mb-6">
-                            <h3 className="text-3xl md:text-5xl font-bold text-white uppercase font-cool leading-tight">
+                            <h3 className="text-5xl font-bold text-white uppercase font-cool leading-tight">
                                 {card.title}
                             </h3>
-                            {/* Номер для мобилок */}
-                            <span className="md:hidden font-mono text-2xl text-white/20 font-bold">
-                                0{index + 1}
-                            </span>
                         </div>
                         
                         <div className="flex flex-wrap gap-3 mb-8">
-                             {card.tags.map((tag: string, idx: number) => (
+                            {card.tags.map((tag: string, idx: number) => (
                                 <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/50 text-xs uppercase tracking-wider">
                                     {tag}
                                 </span>
@@ -130,21 +165,16 @@ function ServiceCard({ card, index, total }: { card: any, index: number, total: 
                         </p>
                     </div>
 
-                    {/* Правая колонка - Картинка */}
-                    <div className="relative w-full h-[300px] md:h-full bg-[#050505]">
-                        <div className="absolute top-6 right-8 z-20 font-mono text-6xl md:text-8xl text-white opacity-10 font-bold pointer-events-none hidden md:block">
-                            0{index + 1}
-                        </div>
-
+                    {/* Картинка */}
+                    <div className="relative w-full h-full bg-[#050505]">
                         <Image 
                             src={card.img} 
                             alt={card.title}
                             fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
+                            sizes="50vw"
                             className="object-cover opacity-60"
-                            loading="lazy" 
                         />
-                         <div className="absolute inset-0 bg-gradient-to-l from-background/20 via-transparent to-background/80 md:to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-l from-background/20 via-transparent to-background/80 pointer-events-none" />
                     </div>
 
                 </div>

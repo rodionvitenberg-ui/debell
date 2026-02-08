@@ -7,7 +7,7 @@ import MetallicPaint from "./MetallicPaint"; // Импортируем комп�
 
 export default function AboutTeam() {
   return (
-    <section className="relative w-full pb-20 md:pb-32 bg-secondary px-2 md:px-4">
+    <section className="relative w-full pb-5 md:pb-20 bg-secondary px-2 md:px-4">
       
       {/* СЕТКА (Grid Layout) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4 h-auto md:h-[850px] w-full">
@@ -70,9 +70,15 @@ export default function AboutTeam() {
 
                   {/* Правая часть: Кнопка-ссылка */}
                   <div className="pointer-events-auto">
-                    <button className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/10 border border-white/10 backdrop-blur-md flex items-center justify-center group hover:bg-white hover:border-white transition-all duration-300">
-                        <ArrowUpRight className="w-5 h-5 md:w-6 md:h-6 text-white group-hover:text-black transition-colors duration-300" />
-                    </button>
+                    <a 
+                      href="#contact" 
+                      className="group flex items-center gap-3 px-6 py-3 rounded-full bg-accent/70 backdrop-blur-md transition-all duration-300"
+                    >
+                        <span className="text-white font-bold text-sm md:text-base uppercase tracking-wider duration-300">
+                          Связаться с нами
+                        </span>
+                        <ArrowUpRight className="w-5 h-5 text-white duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
+                    </a>
                   </div>
 
               </div>
