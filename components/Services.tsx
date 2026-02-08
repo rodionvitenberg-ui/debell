@@ -31,7 +31,7 @@ const cardData = [
 
 export default function Services() {
   return (
-    <section className="relative w-full bg-secondary py-16 md:py-20 px-4 md:px-4">
+    <section className="relative w-full bg-secondary py-16 md:py-20 px-2 md:px-4">
       
       <div className="relative w-full max-w-[100%] mx-auto isolate">
          

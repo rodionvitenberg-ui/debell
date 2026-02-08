@@ -58,30 +58,37 @@ export default function AboutTeam() {
               </div>
 
               {/* 2. КОНТЕНТ (Поверх эффекта) */}
-              {/* z-10 чтобы текст был над картинкой */}
-              <div className="relative z-10 flex justify-between items-start w-full h-full pointer-events-none">
-                  
-                  {/* Левая часть: Текст */}
-                  <div className="max-w-[60%] flex flex-col justify-start pt-2">
-                      <p className="font-cool text-white text-[0.9rem] md:text-[1.35rem] font-bold tracking-wide leading-tight">
-                        Первые на Иссык-Куле,<br /> мы создали команду,<br /> которая не просто<br /> следует трендам,<br /> а задает их.
-                      </p>
-                  </div>
+<div className="
+    relative z-10 w-full h-full pointer-events-none
+    flex flex-col md:flex-row          /* Мобилка: колонка, Десктоп: строка */
+    justify-between                    /* ГЛАВНОЕ: Раскидываем элементы по краям (Верх/Низ или Лево/Право) */
+    items-start                        /* Прижимаем к левому краю (или верхнему на десктопе) */
+">
+    
+    {/* Левая часть: Текст */}
+    {/* w-full на мобилке, чтобы занимал ширину. pt-2 для небольшого отступа сверху */}
+    <div className="max-w-[45%] md:max-w-[35%] flex flex-col justify-start pt-1">
+        <p className="font-cool text-white text-[1rem] md:text-[1.35rem] font-bold tracking-wide leading-tight ">
+          Первые на Иссык-Куле,<br /> мы создали команду, которая не просто следует трендам,<br /> а задает их.
+        </p>
+    </div>
 
-                  {/* Правая часть: Кнопка-ссылка */}
-                  <div className="pointer-events-auto">
-                    <a 
-                      href="#contact" 
-                      className="group flex items-center gap-3 px-6 py-3 rounded-full bg-accent/70 backdrop-blur-md transition-all duration-300"
-                    >
-                        <span className="text-white font-bold text-sm md:text-base uppercase tracking-wider duration-300">
-                          Связаться с нами
-                        </span>
-                        <ArrowUpRight className="w-5 h-5 text-white duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
-                    </a>
-                  </div>
+    {/* Правая часть: Кнопка-ссылка */}
+    {/* pointer-events-auto: чтобы кнопка нажималась */}
+    {/* pb-2: небольшой отступ снизу для красоты на мобилке (опционально) */}
+    <div className="pointer-events-auto pb-2 md:pb-0">
+      <a 
+        href="#contact" 
+        className="group flex items-center gap-2 px-2 md:px-6 md:py-4 py-2 rounded-full bg-accent/70 backdrop-blur-md transition-all duration-300"
+      >
+          <span className="text-white font-bold text-[0.6rem] md:text-[1rem] uppercase duration-300">
+            Связаться с нами
+          </span>
+          <ArrowUpRight className="w-5 h-5 text-white duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 transform" />
+      </a>
+    </div>
 
-              </div>
+</div>
           </div>
         </div>
 

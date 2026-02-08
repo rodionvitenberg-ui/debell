@@ -27,7 +27,7 @@ export default function ContactBlock() {
       onClick={handleClick}
       initial={false}
       animate={{
-        width: isMobile ? "55%" : 200,
+        width: isMobile ? "70%" : 200,
         height: isContactOpen ? "auto" : 56,
         backgroundColor: isContactOpen ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.5)",
         borderRadius: 20

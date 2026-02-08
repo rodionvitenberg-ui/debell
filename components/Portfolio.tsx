@@ -31,11 +31,11 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section className="relative w-full bg-secondary py-14 md:py-24 px-4 md:px-0">
+    <section className="relative w-full bg-secondary py-14 md:pb-15 md:pt-0 px-4 md:px-0">
       <div className="flex flex-col gap-0 max-w-6xl mx-auto">
 
         {/* --- ШАПКА СЕКЦИИ --- */}
-        <div className="mb-12 md:mb-24 px-2 md:px-0 flex flex-col items-start">
+        <div className="mb-12 md:mb-10 px-2 md:px-0 flex flex-col items-start">
           <motion.h2 
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
@@ -71,7 +71,7 @@ export default function Portfolio() {
         </div>
 
         {/* СПИСОК КАРТОЧЕК */}
-        <div className="flex flex-col gap-8 md:gap-32 w-full pb-0">
+        <div className="flex flex-col gap-8 md:gap-8 w-full pb-0 md:pb-10">
             {projects.map((project, i) => {
               return (
                 <Card 
@@ -115,7 +115,7 @@ function Card({ i, project }: any) {
             h-[220px]       /* Мобилка: фиксированные 350px */
             md:h-[500px]    /* Десктоп: 600px */
             
-            rounded-[1.5rem] md:rounded-[2.5rem] 
+            rounded-[1.5rem] md:rounded-[2.5rem]
             overflow-hidden 
             shadow-2xl 
             bg-background

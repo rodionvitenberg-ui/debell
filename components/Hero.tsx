@@ -14,7 +14,7 @@ export default function Hero() {
   ];
 
   return (
-    <section className="relative mix-blend-mode: difference w-full min-h-auto md:min-h-[102dvh] flex flex-col items-center justify-start pt-20 md:pt-25 px-4 pb-8 md:pb-4 overflow-hidden">
+    <section className="relative mix-blend-mode: difference w-full min-h-auto md:min-h-[102dvh] flex flex-col items-center justify-start pt-20 md:pt-25 px-2 md:px-4 pb-8 md:pb-4 overflow-hidden">
       
       {/* 1. ЗАГОЛОВОК (Статика) */}
       <div className="relative z-10 flex flex-col items-start md:flex-col md:items-center md:justify-center w-full mb-4 md:mb-4 shrink-0 gap-0 md:gap-0">
@@ -35,7 +35,7 @@ export default function Hero() {
       <div 
         className="relative w-full  max-w-[100%] md:max-w-100%] 
                    flex flex-col justify-between
-                   min-h-[50vh] h-auto
+                   min-h-[50vh] h-auto mx-2
                    md:flex-1 md:min-h-[45vh] md:justify-between
                    bg-background rounded-[2rem] md:rounded-[2.5rem] 
                    overflow-hidden"

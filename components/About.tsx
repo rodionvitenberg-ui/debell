@@ -6,7 +6,7 @@ export default function About() {
   const textSizeClasses = "font-bold md:font-cool text-[1.4rem] sm:text-xl md:text-2xl lg:text-3xl leading-[1.0] md:leading-[1.1] tracking-tight md:tracking-normal";
 
   return (
-    <section className="relative w-full pt-0 pb-10 md:py-20 bg-secondary overflow-hidden">
+    <section className="relative w-full pt-0 pb-10 md:py-10 bg-secondary overflow-hidden">
       
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center gap-5 md:gap-10 mt-4 md:mt-0">

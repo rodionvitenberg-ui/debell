@@ -17,7 +17,7 @@ export default function TeamOrbit() {
     const updateRadii = () => {
       // Адаптация под мобильные устройства (< 768px)
       if (window.innerWidth < 768) {
-        setRadii([110, 150, 190]); // Компактные орбиты
+        setRadii([75, 115, 155]); // Компактные орбиты
       } else {
         setRadii([150, 250, 350]); // Просторные орбиты
       }
@@ -46,7 +46,7 @@ export default function TeamOrbit() {
       {/* ЦЕНТРАЛЬНЫЙ ТЕКСТ */}
       <div className="absolute z-10 flex flex-col items-center justify-center text-center pointer-events-none max-w-[130px] md:max-w-[220px]">
         
-        <h3 className="font-cool text-white text-[0.9rem] md:text-[1.35rem] font-bold tracking-wide leading-tight">
+        <h3 className="font-cool text-white text-[0.80rem] md:text-[1.35rem] font-bold tracking-wide leading-tight">
           Маленькая, ламповая, но очень сильная команда.
         </h3>
       </div>
