@@ -5,18 +5,12 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
+import { useLocale } from "next-intl"; 
 import StaggeredMenu from "./StaggeredMenu";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollToPlugin);
-
-const menuItems = [
-  { label: 'Главная', ariaLabel: 'Go to home page', link: '/#hero' },
-  { label: 'О нас', ariaLabel: 'Learn about us', link: '/#about' },
-  { label: 'Услуги', ariaLabel: 'View our services', link: '/#services' },
-  { label: 'Контакты', ariaLabel: 'Get in touch', link: '/contact' }
-];
 
 const socialItems = [
   { label: 'Telegram', link: 'https://github.com/rodionvitenberg-ui/' },
@@ -31,9 +25,17 @@ export default function Header() {
   
   const router = useRouter(); 
   const pathname = usePathname(); 
+  const locale = useLocale(); 
   const { scrollY } = useScroll();
 
-  const isContactPage = pathname === '/contact';
+  const menuItems = [
+    { label: 'Главная', ariaLabel: 'Go to home page', link: `/${locale}/#hero` },
+    { label: 'О нас', ariaLabel: 'Learn about us', link: `/${locale}/#about` },
+    { label: 'Услуги', ariaLabel: 'View our services', link: `/${locale}/#services` },
+    { label: 'Контакты', ariaLabel: 'Get in touch', link: `/${locale}/contact` }
+  ];
+
+  const isContactPage = pathname === `/${locale}/contact`;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
       const previous = scrollY.getPrevious() ?? 0;
@@ -44,33 +46,49 @@ export default function Header() {
       }
   });
 
+  // Эффект сброса навигации при смене пути
   useEffect(() => {
     if (isNavigating) {
-        const timer = setTimeout(() => {
-            setIsNavigating(false);
-        }, 500); 
+        const timer = setTimeout(() => setIsNavigating(false), 500); 
         return () => clearTimeout(timer);
     }
-  }, [pathname]); 
+  }, [pathname]); // <-- Срабатывает только если путь реально изменился
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const blurredClass = "blur-sm opacity-50 pointer-events-none";
 
   const handleTransition = (e: React.MouseEvent<HTMLAnchorElement> | null, href: string) => {
     if (e) e.preventDefault(); 
-    const targetPath = href.includes('#') ? href.split('#')[0] || '/' : href;
-    const isAnchorOnCurrentPage = href.includes('#') && (targetPath === pathname || (targetPath === '/' && pathname === '/'));
+    
+    // 1. Нормализуем пути (убираем хеш и лишние слеши)
+    const targetPath = href.includes('#') ? href.split('#')[0] : href;
+    const normalize = (p: string) => p.replace(/\/+$/, "") || "/";
+    
+    // 2. Проверяем, это та же самая страница?
+    const isSamePage = normalize(targetPath) === normalize(pathname);
 
-    if (isAnchorOnCurrentPage) {
+    if (isSamePage) {
+      // ЕСЛИ МЫ УЖЕ ЗДЕСЬ:
       setIsOpen(false); 
-      const targetId = href.split('#')[1];
-      gsap.to(window, {
-        duration: 1.5,
-        scrollTo: { y: `#${targetId}`, offsetY: 0 },
-        ease: "power4.inOut"
-      });
+      
+      // Если есть якорь (#about), скроллим к нему
+      if (href.includes('#')) {
+          const targetId = href.split('#')[1];
+          if (targetId) {
+            gsap.to(window, {
+                duration: 1.5,
+                scrollTo: { y: `#${targetId}`, offsetY: 0 },
+                ease: "power4.inOut"
+            });
+          }
+      } 
+      // Если якоря нет (просто клик по ссылке текущей страницы), 
+      // ничего не делаем или скроллим вверх (по желанию). 
+      // ГЛАВНОЕ: Не включаем isNavigating(true)
+      
     } else {
-      setIsNavigating(true); 
+      // ЕСЛИ ЭТО НОВАЯ СТРАНИЦА:
+      setIsNavigating(true); // Включаем "белый экран"
       setTimeout(() => {
         setIsOpen(false); 
         router.push(href);
@@ -80,6 +98,7 @@ export default function Header() {
 
   return (
     <>
+      {/* Шторка перехода */}
       <AnimatePresence>
         {isNavigating && (
           <motion.div
@@ -99,10 +118,10 @@ export default function Header() {
         className="fixed top-0 left-0 z-[60] w-full flex items-center justify-between px-6 py-2 md:px-12 bg-background pointer-events-auto shadow-sm transform-gpu isolation-auto"
       >
         
-        {/* === LOGO (DESKTOP) === */}
+        {/* LOGO */}
         <Link 
-          href="/#hero" 
-          onClick={(e) => handleTransition(e, "/#hero")} 
+          href={`/${locale}/#hero`} 
+          onClick={(e) => handleTransition(e, `/${locale}/#hero`)} 
           className={`hidden md:flex group items-center gap-2 transition-all duration-500 ${isOpen ? blurredClass : ''}`}
         >
           <div className="relative w-48 h-14">
@@ -118,11 +137,10 @@ export default function Header() {
           </div>
         </Link>
 
-        {/* === MOBILE LEFT ELEMENT === */}
-        {/* Здесь теперь ЛОГОТИП вместо текста Let's Talk */}
+        {/* MOBILE LOGO */}
         <Link
-             href={isContactPage ? "/" : "/contact"}
-             onClick={(e) => handleTransition(e, isContactPage ? "/" : "/contact")}
+             href={isContactPage ? `/${locale}` : `/${locale}/contact`}
+             onClick={(e) => handleTransition(e, isContactPage ? `/${locale}` : `/${locale}/contact`)}
              className={`md:hidden relative z-[70] transition-all duration-300 ${isOpen ? blurredClass : ''}`}
         >
             <div className="relative w-32 h-12">
@@ -137,7 +155,7 @@ export default function Header() {
             </div>
         </Link>
 
-        {/* === NAV (DESKTOP) === */}
+        {/* NAV (DESKTOP) */}
         <nav className="hidden md:flex items-center gap-8">
           <div className={`flex items-center gap-8 transition-all duration-500 ${isOpen ? blurredClass : ''}`}>
             {menuItems.map((item) => (
@@ -173,7 +191,7 @@ export default function Header() {
           </button>
         </nav>
 
-        {/* === MOBILE BURGER === */}
+        {/* MOBILE BURGER */}
         <div className="md:hidden">
              <button 
                 onClick={toggleMenu} 
