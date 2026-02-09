@@ -73,10 +73,10 @@ export default function TeamOrbit() {
               icon={
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
-                    src="/logo.png"
+                    src="/vova.jpg"
                     alt="Сотрудник 1"
                     fill
-                    className="object-cover"
+                    className="object-cover fill" 
                   />
                 </div>
               }
@@ -98,7 +98,7 @@ export default function TeamOrbit() {
               icon={
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
-                    src="/logo2.png"
+                    src="/rodion.jpg"
                     alt="Сотрудник 2"
                     fill
                     className="object-cover"
@@ -123,7 +123,7 @@ export default function TeamOrbit() {
               icon={
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
-                    src="/logo4.png"
+                    src="/tanya.jpg"
                     alt="Сотрудник 3"
                     fill
                     className="object-cover"

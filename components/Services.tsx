@@ -5,27 +5,27 @@ import Image from "next/image";
 const cardData = [
   {
     title: "Landing Page",
-    description: "Точка входа для вашего трафика. Мы проектируем лендинги с одной целью — превращать посетителей в клиентов. Идеальная структура, цепляющий копирайтинг и дизайн, который бьет точно в цель.",
-    img: "/project1.jpg", 
-    tags: ["High Conversion", "3-5 дней"]
+    description: "Точка входа для вашего трафика. Мы проектируем лендинги для того, чтобы превращать посетителей в клиентов. Идеальная структура, цепляющий копирайтинг и дизайн, который бьет точно в цель.",
+    img: "/project1.png", 
+    tags: ["High Conversion", "до 5 дней",]
   },
   {
     title: "Corporate Website",
     description: "Цифровая штаб-квартира вашего бренда. Мы создаем платформы, которые транслируют ваши ценности и вызывают доверие с первой секунды. Удобная админка, SEO-фундамент и безупречная работа на всех устройствах.",
-    img: "/project2.jpg",
-    tags: ["Brand Identity", "SEO Ready", "7-10 дней"]
+    img: "/project2.png",
+    tags: ["Brand Identity", "SEO Ready", "до 10 дней"]
   },
   {
     title: "E-Commerce",
-    description: "Ваш бизнес работает 24/7. Мы строим мощные интернет-магазины с фокусом на User Journey. От удобного каталога до безопасной оплаты — мы убираем все барьеры между товаром и покупателем.",
-    img: "/project3.jpg",
-    tags: ["Global Sales", "Integrations", "10-14 дней"]
+    description: "Ваш бизнес работает 24/7. Мы строим мощные интернет-магазины с фокусом на User Journey. От удобного каталога до безопасной оплаты - мы убираем все барьеры между товаром и покупателем.",
+    img: "/project3.png",
+    tags: ["Global Sales", "Integrations", "до 14 дней"]
   },
   {
     title: "Web Applications",
     description: "Больше, чем просто сайт. Мы разрабатываем сложные экосистемы: CRM, личные кабинеты, SaaS-решения. Инструменты, которые автоматизируют рутину и помогают вашему бизнесу масштабироваться.",
-    img: "/project4.jpg",
-    tags: ["Automation", "React / Python", "~месяц"]
+    img: "/project4.png",
+    tags: ["Automation", "React / Python / Go", "до 30 дней"]
   },
 ];
 
@@ -166,7 +166,7 @@ function DesktopServiceCard({ card, index, total }: { card: any, index: number, 
                     </div>
 
                     {/* Картинка */}
-                    <div className="relative w-full h-full bg-[#050505]">
+                    <div className="relative w-full h-full">
                         <Image 
                             src={card.img} 
                             alt={card.title}

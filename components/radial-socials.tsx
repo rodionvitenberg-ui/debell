@@ -105,14 +105,14 @@ const RadialIcon = React.forwardRef<HTMLDivElement, InternalRadialIconProps>(
       >
         <div
           className={cn(
-            "flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-card/90 text-card-foreground transition-all duration-300 backdrop-blur-sm border border-border/50 shadow-lg",
+            "relative rounded-full bg-card/90 transition-all duration-300 backdrop-blur-sm border border-border/50 shadow-lg overflow-hidden",
             className
           )}
           style={{
             animation: rotationStarted ? `counter-rotate-${circleIndex} ${duration}s linear infinite` : 'none'
           }}
         >
-          <div className="w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
+          <div className="w-full h-full">
             {icon}
           </div>
         </div>
