@@ -96,9 +96,12 @@ export default function FAQ() {
                               <p className="text-white/90 font-mono text-sm leading-relaxed">
                                  Остались вопросы? 
                                  <br/>
-                                 <span className="text-accent cursor-pointer hover:underline mt-2 block pointer-events-auto">
-                                    Свяжитесь с нами
-                                 </span>
+                                 <a 
+  href="/contact" 
+  className="text-accent cursor-pointer hover:underline mt-2 block pointer-events-auto"
+>
+  Свяжитесь с нами
+</a>
                               </p>
                           </div>
 

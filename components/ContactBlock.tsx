@@ -104,8 +104,8 @@ export default function ContactBlock() {
               <div className="flex items-center gap-2 text-white/50 text-xs uppercase tracking-wider font-medium">
                 <Mail className="w-3 h-3" /> Email
               </div>
-              <a href="mailto:hello@issikkul.soft" className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
-                hello@issikkul.soft
+              <a href="mailto:rodionvitenberg@gmail.com" className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
+                rodionvitenberg@gmail.com
               </a>
             </div>
 

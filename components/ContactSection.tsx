@@ -41,7 +41,7 @@ const contacts = [
   },
   {
     name: "Email",
-    link: "mailto:contact@debell.dev",
+    link: "mailto:rodionvitenberg@gmail.com",
     icon: <Mail className="w-5 h-5" />,
     color: "hover:bg-accent hover:text-white hover:border-transparent text-gray-600"
   }
