@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { Instagram, Mail } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -20,6 +21,42 @@ const TelegramIcon = ({ className }: { className?: string }) => (
 
 export default function ContactSection() {
   const t = useTranslations("ContactSection");
+
+  // Стейты для управления формой
+  const [formData, setFormData] = useState({ name: "", contact: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  // Обработчик ввода текста
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+
+  // Обработчик отправки формы
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const response = await fetch("/api/telegram", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        setFormData({ name: "", contact: "", message: "" }); // Очищаем форму после успеха
+        setTimeout(() => setStatus("idle"), 3000); 
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 3000);
+      }
+    } catch (error) {
+      console.error(error);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  };
 
   // Массив контактов перенесен внутрь компонента, чтобы иметь доступ к t()
   const contacts = [
@@ -101,7 +138,7 @@ export default function ContactSection() {
           {/* 2. ЕДИНАЯ ФОРМА */}
           <div className="w-full">
               
-              <form className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+              <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                   
                   {/* Имя */}
                   <div className="flex flex-col gap-2 md:col-span-1">
@@ -111,6 +148,9 @@ export default function ContactSection() {
                       <input 
                         type="text" 
                         id="name"
+                        required
+                        value={formData.name}
+                        onChange={handleChange}
                         placeholder={t("form.namePlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors rounded-none"
                       />
@@ -124,6 +164,9 @@ export default function ContactSection() {
                       <input 
                         type="text" 
                         id="contact"
+                        required
+                        value={formData.contact}
+                        onChange={handleChange}
                         placeholder={t("form.contactPlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors rounded-none"
                       />
@@ -137,18 +180,26 @@ export default function ContactSection() {
                       <textarea 
                         id="message"
                         rows={3}
+                        required
+                        value={formData.message}
+                        onChange={handleChange}
                         placeholder={t("form.messagePlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors resize-none rounded-none"
                       />
                   </div>
 
                   {/* Кнопка отправки */}
+                  {/* Кнопка отправки */}
                   <div className="md:col-span-2 mt-8">
                     <button 
-                        type="button"
-                        className="w-full md:w-auto md:min-w-[200px] py-5 px-8 bg-black text-white font-bold uppercase tracking-widest text-sm hover:bg-accent transition-colors duration-300 rounded-md"
+                        type="submit"
+                        disabled={status === "loading" || status === "success"}
+                        className="w-full md:w-auto md:min-w-[200px] py-5 px-8 bg-black text-white font-bold uppercase tracking-widest text-sm hover:bg-accent transition-colors duration-300 rounded-md disabled:opacity-70 disabled:cursor-not-allowed"
                     >
-                        {t("form.submit")}
+                        {status === "idle" && t("form.submit")}
+                        {status === "loading" && t("form.sending")}
+                        {status === "success" && t("form.success")}
+                        {status === "error" && t("form.error")}
                     </button>
                     <p className="text-gray-400 text-xs mt-4 font-mono">
                         {t("form.legal")}

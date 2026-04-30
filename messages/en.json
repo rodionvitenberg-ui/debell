@@ -22,7 +22,7 @@
     "contactUs": "Contact Us",
     "contacts": "Contacts",
     "emailLabel": "Email",
-    "emailValue": "rodionvitenberg@gmail.com",
+    "emailValue": "iksoftpro@gmail.com",
     "phoneLabel": "Phone",
     "phoneValue": "+1 555 123 4567" 
   },
@@ -68,7 +68,7 @@
     "historyP2": "Our company offers a product that doesn't just look good, but works for your business. We build digital ecosystems that scale with you and don't fall apart at the first spike in traffic or when new features are added.",
     "historyP3": "We believe that a brand's success today is 50% its digital infrastructure. We write clean, structured code because it works faster and more efficiently for your business.",
     "origins": "IKSoft Origins",
-    "missionTitle": "Building solutions\nthat work globally.",
+    "missionTitle": "Building solutions that work.",
     "missionText": "Our team understands the value of modern tools and knows how to use them so your business grows day by day, rather than just having a \"presence\" online.\nWe are here to raise the bar. Sleeves rolled up.",
     "ctaButton": "Let's talk business"
   },
@@ -136,7 +136,7 @@
       "wa": "https://wa.me/+996550418317",
       "tg": "https://t.me/pwnedking",
       "ig": "https://instagram.com/",
-      "email": "mailto:rodionvitenberg@gmail.com"
+      "email": "mailto:iksoftpro@gmail.com"
     },
     "form": {
       "nameLabel": "Your Name",
@@ -146,6 +146,9 @@
       "messageLabel": "About the project",
       "messagePlaceholder": "Tell us a bit about your task...",
       "submit": "Submit Request",
+      "sending": "Sending...",
+      "success": "Successfully sent!",
+      "error": "Error. Please try again",
       "legal": "By clicking the button, you agree to our personal data processing policy."
     }
   },

@@ -13,10 +13,10 @@ export default function AboutTeam() {
     <section className="relative w-full pb-5 md:pb-20 bg-secondary px-2 md:px-4">
       
       {/* СЕТКА (Grid Layout) */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4 h-auto md:h-[850px] w-full">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-4 h-auto md:h-[850px] h-[750px] w-full">
         
         {/* --- ЛЕВЫЙ БЛОК (Орбиты) --- */}
-        <div className="col-span-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden shadow-2xl relative min-h-[500px] md:min-h-full bg-[#171717]">
+        <div className="col-span-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden shadow-2xl relative min-h-[400px] md:min-h-full bg-[#171717]">
            <TeamOrbit />
         </div>
 
@@ -24,7 +24,7 @@ export default function AboutTeam() {
         <div className="flex flex-col gap-4 md:gap-4 h-full">
           
           {/* Правый Верхний Блок (Чат) */}
-          <div className="flex-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden min-h-[350px]">
+          <div className="flex-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden min-h-[300px]">
              <ChatSimulation />
           </div>
 
@@ -75,7 +75,7 @@ export default function AboutTeam() {
                   </div>
 
                   {/* Правая часть: Кнопка-ссылка */}
-                  <div className="pointer-events-auto pb-2 md:pb-0">
+                  <div className="pointer-events-auto pb-2 md:pb-0 md:self-end">
                     <a 
                       href="#contact" 
                       className="group flex items-center gap-2 px-2 md:px-6 md:py-4 py-2 rounded-full bg-accent/70 backdrop-blur-md transition-all duration-300"

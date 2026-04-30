@@ -20,7 +20,7 @@ export default function TeamOrbit() {
     const updateRadii = () => {
       // Адаптация под мобильные устройства (< 768px)
       if (window.innerWidth < 768) {
-        setRadii([75, 115, 155]); // Компактные орбиты
+        setRadii([85, 125, 165]); // Компактные орбиты
       } else {
         setRadii([150, 250, 350]); // Просторные орбиты
       }
@@ -32,10 +32,10 @@ export default function TeamOrbit() {
   }, []);
 
   // Единый класс размера для всех аватарок
-  const avatarSizeClass = "w-10 h-10 md:w-14 md:h-14 border-none shadow-2xl transition-transform";
+  const avatarSizeClass = "w-9 h-9 md:w-14 md:h-14 border-none shadow-2xl transition-transform";
 
   return (
-    <div className="relative w-full h-full min-h-[400px] md:min-h-[500px] flex items-center justify-center bg-gradient-to-b from-background to-secondary/10 overflow-hidden">
+    <div className="relative w-full h-full min-h-[300px] md:min-h-[500px] flex items-center justify-center bg-gradient-to-b from-background to-secondary/10 overflow-hidden">
       <style jsx global>{`
         @keyframes rotate-0 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         @keyframes rotate-1 { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

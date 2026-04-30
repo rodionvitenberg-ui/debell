@@ -100,7 +100,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
   return gradientColor * 0.5;
 }
 
-  float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) {
+float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) {
   float time = iTime * animationSpeed;
 
   float x_offset   = offset;
@@ -110,7 +110,7 @@ vec3 getLineColor(float t, vec3 baseColor) {
 
   if (shouldBend) {
     vec2 d = screenUv - mouseUv;
-    float influence = exp(-dot(d, d) * bendRadius); // radial falloff around cursor
+    float influence = exp(-dot(d, d) * bendRadius); 
     float bendOffset = (mouseUv.y - screenUv.y) * influence * bendStrength * bendInfluence;
     y += bendOffset;
   }
@@ -397,6 +397,18 @@ export default function FloatingLines({
       const canvasWidth = renderer.domElement.width;
       const canvasHeight = renderer.domElement.height;
       uniforms.iResolution.value.set(canvasWidth, canvasHeight, 1);
+
+      // --- ДОБАВЛЕНА ЛОГИКА ДЛЯ СДВИГА НА МОБИЛКЕ ---
+      const isMobile = width < 768;
+      
+      // Здесь мы регулируем сдвиг. Чем больше отрицательное число, тем ниже упадут линии.
+      // -0.6 обычно достаточно, но можешь менять на -0.4 или -0.8 для идеального результата.
+      const mobileShiftY = isMobile ? -0.3 : 0.0; 
+
+      uniforms.topWavePosition.value.y = (topWavePosition?.y ?? 0.5) + mobileShiftY;
+      uniforms.middleWavePosition.value.y = (middleWavePosition?.y ?? 0.0) + mobileShiftY;
+      uniforms.bottomWavePosition.value.y = (bottomWavePosition?.y ?? -0.7) + mobileShiftY;
+      // ------------------------------------------------
     };
 
     setSize();
@@ -436,9 +448,7 @@ export default function FloatingLines({
 
     let raf = 0;
     const renderLoop = () => {
-      // Если компонент не в поле зрения — пропускаем отрисовку
       if (!isInView) { 
-        // Можно поставить небольшую задержку проверки, но проще просто не рендерить
         raf = requestAnimationFrame(renderLoop);
         return; 
       }

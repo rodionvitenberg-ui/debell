@@ -22,7 +22,7 @@
     "contactUs": "Связаться с нами",
     "contacts": "Контакты",
     "emailLabel": "Email",
-    "emailValue": "rodionvitenberg@gmail.com",
+    "emailValue": "iksoftpro@gmail.com",
     "phoneLabel": "Телефон",
     "phoneValue": "+7 999 123 45 67" 
   },
@@ -136,7 +136,7 @@
       "wa": "https://wa.me/+996550418317",
       "tg": "https://t.me/pwnedking",
       "ig": "https://instagram.com/",
-      "email": "mailto:rodionvitenberg@gmail.com"
+      "email": "mailto:iksoftpro@gmail.com"
     },
     "form": {
       "nameLabel": "Ваше Имя",
@@ -146,6 +146,9 @@
       "messageLabel": "О проекте",
       "messagePlaceholder": "Расскажите немного о вашей задаче...",
       "submit": "Отправить Заявку",
+      "sending": "Отправка...",
+      "success": "Успешно отправлено!",
+      "error": "Ошибка. Попробуйте еще раз",
       "legal": "Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных."
     }
   },
