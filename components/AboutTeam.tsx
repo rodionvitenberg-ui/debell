@@ -24,7 +24,7 @@ export default function AboutTeam() {
         <div className="flex flex-col gap-4 md:gap-4 h-full">
           
           {/* Правый Верхний Блок (Чат) */}
-          <div className="flex-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden min-h-[300px]">
+          <div className="flex-1 rounded-[2rem] md:rounded-[1.5rem] overflow-hidden min-h-[320px]">
              <ChatSimulation />
           </div>
 
