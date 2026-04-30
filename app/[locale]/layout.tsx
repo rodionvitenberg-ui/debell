@@ -56,7 +56,7 @@ export default async function LocaleLayout({
             </SmoothScroll>
 
             {/* Глобальный блюр внизу экрана */}
-            <div className="fixed bottom-0 left-0 w-full h-[150px] z-50 pointer-events-none
+            <div className="fixed bottom-0 left-0 w-full h-[50px] z-50 pointer-events-none
                             backdrop-blur-[2px]
                             [mask-image:linear-gradient(to_top,rgba(0,0,0,1)_0%,rgba(0,0,0,0)_100%)]">
             </div>
