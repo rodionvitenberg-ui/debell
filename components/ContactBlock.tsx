@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Mail, Phone, X } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 export default function ContactBlock() {
+  const t = useTranslations("ContactBlock");
+  
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -27,7 +30,7 @@ export default function ContactBlock() {
       onClick={handleClick}
       initial={false}
       animate={{
-        width: isMobile ? "70%" : 200,
+        width: isMobile ? "70%" : 220,
         height: isContactOpen ? "auto" : 56,
         backgroundColor: isContactOpen ? "rgba(0,0,0,0.9)" : "rgba(0,0,0,0.5)",
         borderRadius: 20
@@ -71,7 +74,7 @@ export default function ContactBlock() {
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="text-sm font-medium text-white tracking-wider whitespace-nowrap absolute left-0"
                 >
-                  Связаться с нами
+                  {t("contactUs")}
                 </motion.span>
               ) : (
                 <motion.span
@@ -82,7 +85,7 @@ export default function ContactBlock() {
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="text-xs text-white/40 uppercase tracking-widest font-bold absolute left-0"
                 >
-                  Контакты
+                  {t("contacts")}
                 </motion.span>
               )}
             </AnimatePresence>
@@ -102,10 +105,10 @@ export default function ContactBlock() {
           >
             <div className="flex flex-col gap-1 w-full">
               <div className="flex items-center gap-2 text-white/50 text-xs uppercase tracking-wider font-medium">
-                <Mail className="w-3 h-3" /> Email
+                <Mail className="w-3 h-3" /> {t("emailLabel")}
               </div>
-              <a href="mailto:rodionvitenberg@gmail.com" className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
-                rodionvitenberg@gmail.com
+              <a href={`mailto:${t("emailValue")}`} className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
+                {t("emailValue")}
               </a>
             </div>
 
@@ -113,10 +116,10 @@ export default function ContactBlock() {
 
             <div className="flex flex-col gap-1 w-full">
                <div className="flex items-center gap-2 text-white/50 text-xs uppercase tracking-wider font-medium">
-                 <Phone className="w-3 h-3" /> Телефон
+                 <Phone className="w-3 h-3" /> {t("phoneLabel")}
                </div>
-               <a href="tel:+996555123456" className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
-                 +996 555 123 456
+               <a href={`tel:${t("phoneValue").replace(/\s/g, '')}`} className="text-white text-sm font-medium hover:text-[#84ab2f] transition-colors select-text block">
+                 {t("phoneValue")}
                </a>
             </div>
           </motion.div>

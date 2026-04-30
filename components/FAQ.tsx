@@ -4,36 +4,19 @@ import { useState } from "react";
 import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import { Plus } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
+// Оставляем только технические ID
 const faqData = [
-  {
-    id: "01",
-    question: "Сколько времени занимает разработка?",
-    answer: "Сроки зависят от сложности. Лендинг мы делаем за 3-5 дней, корпоративный сайт за 2-3 недели. Мы всегда фиксируем дедлайны в договоре и платим штрафы за просрочку.",
-  },
-  {
-    id: "02",
-    question: "Что нужно для старта работ?",
-    answer: "Нам нужно заполнить бриф (анкету) и обсудить ваши бизнес-цели. Если есть референсы или брендбук — это ускорит процесс. Предоплата 50% перед стартом.",
-  },
-  {
-    id: "03",
-    question: "Будет ли сайт работать на телефонах?",
-    answer: "Разумеется. Mobile-first — наш стандарт. Мы тестируем сайты на всех популярных разрешениях, чтобы они летали и на iPhone, и на Android, и на планшетах.",
-  },
-  {
-    id: "04",
-    question: "Вы предоставляете поддержку после сдачи?",
-    answer: "Да, мы даем гарантию на техническую исправность. Также можем взять проект на ежемесячную поддержку: обновлять контент, следить за безопасностью и развивать функционал.",
-  },
-  {
-    id: "05",
-    question: "Можно ли потом добавить новые функции?",
-    answer: "Наш код модульный и чистый. В любой момент можно доработать функционал, добавить новые страницы или интеграции без переписывания всего сайта с нуля.",
-  }
-];
+  { id: "01" },
+  { id: "02" },
+  { id: "03" },
+  { id: "04" },
+  { id: "05" }
+] as const;
 
 export default function FAQ() {
+  const t = useTranslations("FAQ");
   const [openItems, setOpenItems] = useState<string[]>([]);
 
   const toggleItem = (id: string) => {
@@ -50,11 +33,10 @@ export default function FAQ() {
           
           <div className="mb-12 md:mb-16">
             <h2 className="font-cool text-5xl md:text-7xl text-background font-bold uppercase leading-none">
-                Вопросы и Ответы:
+                {t("title")}
             </h2>
           </div>
 
-          {/* LayoutGroup помогает плавно анимировать изменения высоты */}
           <LayoutGroup>
               <div className="flex flex-col lg:flex-row gap-6 lg:gap-10 items-stretch">
                   
@@ -63,7 +45,8 @@ export default function FAQ() {
                       {faqData.map((item) => (
                           <FAQItem 
                             key={item.id} 
-                            item={item} 
+                            question={t(`items.${item.id}.question` as any)}
+                            answer={t(`items.${item.id}.answer` as any)}
                             isOpen={openItems.includes(item.id)}
                             toggle={() => toggleItem(item.id)}
                           />
@@ -75,33 +58,28 @@ export default function FAQ() {
                     layout 
                     className="hidden lg:block w-[40%] relative min-h-[500px]"
                   >
-                      {/* Убрали sticky, теперь h-full растягивает блок на всю высоту соседей */}
                       <div className="w-full h-full rounded-[2.5rem] overflow-hidden bg-background relative translate-z-0">
                           
                           <Image 
                             src="/art1.jpg"
                             alt="FAQ Art"
                             fill
-                            // Оптимизация: грузим картинку нужного размера
                             sizes="(max-width: 1024px) 100vw, 40vw"
-                            // Оптимизация: отключаем тяжелую анимацию scale при наведении
                             className="object-cover opacity-80" 
                           />
                           
-                          {/* Затемнение */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent opacity-80 pointer-events-none" />
 
-                          {/* Декор */}
                           <div className="absolute bottom-10 left-10 max-w-[250px] z-10 pointer-events-none">
                               <p className="text-white/90 font-mono text-sm leading-relaxed">
-                                 Остались вопросы? 
+                                 {t("stillHaveQuestions")} 
                                  <br/>
                                  <a 
-  href="/contact" 
-  className="text-accent cursor-pointer hover:underline mt-2 block pointer-events-auto"
->
-  Свяжитесь с нами
-</a>
+                                    href="/contact" 
+                                    className="text-accent cursor-pointer hover:underline mt-2 block pointer-events-auto"
+                                 >
+                                    {t("contactUs")}
+                                 </a>
                               </p>
                           </div>
 
@@ -116,7 +94,18 @@ export default function FAQ() {
   );
 }
 
-function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle: () => void }) {
+// Обновляем типизацию и пропсы для FAQItem
+function FAQItem({ 
+    question, 
+    answer, 
+    isOpen, 
+    toggle 
+}: { 
+    question: string;
+    answer: string;
+    isOpen: boolean; 
+    toggle: () => void; 
+}) {
     return (
         <motion.div 
             layout 
@@ -133,7 +122,7 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
                         text-lg md:text-xl font-bold uppercase font-cool leading-tight transition-colors
                         ${isOpen ? 'text-white' : 'text-white/60 group-hover:text-white'}
                     `}>
-                        {item.question}
+                        {question}
                     </h3>
                 </div>
                 
@@ -156,7 +145,7 @@ function FAQItem({ item, isOpen, toggle }: { item: any, isOpen: boolean, toggle:
                         className="overflow-hidden"
                     >
                         <p className="pt-6 pl-0 md:pl-[3.5rem] text-base md:text-lg text-white/50 leading-relaxed max-w-2xl">
-                            {item.answer}
+                            {answer}
                         </p>
                     </motion.div>
                 )}

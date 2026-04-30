@@ -5,13 +5,14 @@ import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { useLocale } from "next-intl"; 
+import { useLocale, useTranslations } from "next-intl"; // Добавили useTranslations
 import StaggeredMenu from "./StaggeredMenu";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 gsap.registerPlugin(ScrollToPlugin);
 
+// Социальные ссылки оставляем снаружи, если они ведут на единые глобальные профили
 const socialItems = [
   { label: 'Telegram', link: 'https://github.com/rodionvitenberg-ui/' },
   { label: 'Instagram', link: 'https://www.linkedin.com/in/rodion-vitenberg-4200363a4/' },
@@ -19,6 +20,7 @@ const socialItems = [
 ];
 
 export default function Header() {
+  const t = useTranslations("Header"); // Инициализируем переводы
   const [isOpen, setIsOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -28,11 +30,12 @@ export default function Header() {
   const locale = useLocale(); 
   const { scrollY } = useScroll();
 
+  // Массив меню теперь внутри, чтобы иметь доступ к t()
   const menuItems = [
-    { label: 'Главная', ariaLabel: 'Go to home page', link: `/${locale}/#hero` },
-    { label: 'О нас', ariaLabel: 'Learn about us', link: `/${locale}/#about` },
-    { label: 'Услуги', ariaLabel: 'View our services', link: `/${locale}/#services` },
-    { label: 'Контакты', ariaLabel: 'Get in touch', link: `/${locale}/contact` }
+    { label: t("nav.home"), ariaLabel: t("aria.home"), link: `/${locale}/#hero` },
+    { label: t("nav.about"), ariaLabel: t("aria.about"), link: `/${locale}/#about` },
+    { label: t("nav.services"), ariaLabel: t("aria.services"), link: `/${locale}/#services` },
+    { label: t("nav.contact"), ariaLabel: t("aria.contact"), link: `/${locale}/contact` }
   ];
 
   const isContactPage = pathname === `/${locale}/contact`;
@@ -46,13 +49,12 @@ export default function Header() {
       }
   });
 
-  // Эффект сброса навигации при смене пути
   useEffect(() => {
     if (isNavigating) {
         const timer = setTimeout(() => setIsNavigating(false), 500); 
         return () => clearTimeout(timer);
     }
-  }, [pathname]); // <-- Срабатывает только если путь реально изменился
+  }, [pathname]); 
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const blurredClass = "blur-sm opacity-50 pointer-events-none";
@@ -60,18 +62,14 @@ export default function Header() {
   const handleTransition = (e: React.MouseEvent<HTMLAnchorElement> | null, href: string) => {
     if (e) e.preventDefault(); 
     
-    // 1. Нормализуем пути (убираем хеш и лишние слеши)
     const targetPath = href.includes('#') ? href.split('#')[0] : href;
     const normalize = (p: string) => p.replace(/\/+$/, "") || "/";
     
-    // 2. Проверяем, это та же самая страница?
     const isSamePage = normalize(targetPath) === normalize(pathname);
 
     if (isSamePage) {
-      // ЕСЛИ МЫ УЖЕ ЗДЕСЬ:
       setIsOpen(false); 
       
-      // Если есть якорь (#about), скроллим к нему
       if (href.includes('#')) {
           const targetId = href.split('#')[1];
           if (targetId) {
@@ -82,13 +80,8 @@ export default function Header() {
             });
           }
       } 
-      // Если якоря нет (просто клик по ссылке текущей страницы), 
-      // ничего не делаем или скроллим вверх (по желанию). 
-      // ГЛАВНОЕ: Не включаем isNavigating(true)
-      
     } else {
-      // ЕСЛИ ЭТО НОВАЯ СТРАНИЦА:
-      setIsNavigating(true); // Включаем "белый экран"
+      setIsNavigating(true); 
       setTimeout(() => {
         setIsOpen(false); 
         router.push(href);
@@ -98,7 +91,6 @@ export default function Header() {
 
   return (
     <>
-      {/* Шторка перехода */}
       <AnimatePresence>
         {isNavigating && (
           <motion.div
@@ -163,6 +155,7 @@ export default function Header() {
                 key={item.label}
                 href={item.link}
                 onClick={(e) => handleTransition(e, item.link)}
+                aria-label={item.ariaLabel}
                 className="font-sans text-xs font-bold uppercase tracking-[0.2em] relative group text-white transition-colors duration-300"
               >
                 {item.label}
@@ -174,7 +167,7 @@ export default function Header() {
           <button 
             onClick={toggleMenu} 
             className="flex flex-col gap-1.5 group cursor-pointer z-[70] ml-4"
-            aria-label="Toggle Menu"
+            aria-label={t("aria.toggleMenu")}
           >
             <motion.span 
               animate={isOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }}
@@ -195,6 +188,7 @@ export default function Header() {
         <div className="md:hidden">
              <button 
                 onClick={toggleMenu} 
+                aria-label={t("aria.toggleMenu")}
                 className="relative z-[70] flex flex-col gap-1.5 group cursor-pointer"
             >
                 <motion.span 

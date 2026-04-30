@@ -1,1 +1,167 @@
-{}
+{
+  "Hero": {
+    "title": "IkSoft",
+    "subtitle": "We know how to do it better",
+    "labels": {
+      "sales": "Sales Increase",
+      "brand": "Brand Awareness",
+      "design": "Custom Design",
+      "support": "Personal Support"
+    },
+    "badge": "Web Development & Design",
+    "rotatingPrefix": "Modern digital solutions for",
+    "rotatingWords": {
+      "hotels": "hotels.",
+      "hostels": "hostels.",
+      "restaurants": "restaurants.",
+      "bars": "bars.",
+      "business": "businesses."
+    }
+  },
+  "ContactBlock": {
+    "contactUs": "Contact Us",
+    "contacts": "Contacts",
+    "emailLabel": "Email",
+    "emailValue": "rodionvitenberg@gmail.com",
+    "phoneLabel": "Phone",
+    "phoneValue": "+1 555 123 4567" 
+  },
+  "About": {
+    "paragraph1": "We design and launch complex web systems that turn chaos into profit and bring in new clients.\nImplementing world-class web standards from Issyk-Kul to Osh.",
+    "paragraph2": "We don't just draw pretty websites, we build tools. Our approach is accuracy and reliability, multiplied by an understanding of the modern market. We are here to prove:\nworld-class products can be and are made in Kyrgyzstan."
+  },
+  "AboutTeam": {
+    "description": "The first in Issyk-Kul,\nwe've built a team that doesn't just follow trends,\nbut sets them.",
+    "contactButton": "Contact Us",
+    "orbitText": "A small, close-knit, but incredibly strong team.",
+    "employeeAlt": "Team member"
+  },
+  "ChatSimulation": {
+    "header": "Regular work chat, nothing unusual",
+    "msg1": "Did they approve the main page design?",
+    "msg2": "Yes, the client loved it 🔥",
+    "msg3": "Awesome! I'll start the layout.",
+    "msg4": "Should be ready by evening.",
+    "msg5": "I'll drop the link in this chat."
+  },
+  "Portfolio": {
+    "title": "Our Works:",
+    "subtitle": "Live projects for real clients",
+    "projects": {
+      "daerdree": {
+        "title": "Daerdree bar & timeclub",
+        "category": "A place with atmosphere and soul"
+      },
+      "careyourpet": {
+        "title": "Careyour.pet",
+        "category": "CRM for breeders and veterinarians"
+      },
+      "proffmusic": {
+        "title": "Proffmusic",
+        "category": "Audio stock and marketplace"
+      }
+    }
+  },
+  "OurMission": {
+    "historyTitle": "Why are we here?",
+    "historyP1": "We created IkSoft because we were tired of seeing promising brands in Kyrgyzstan stall due to weak technology. For too long, our market has been fed cookie-cutter solutions, slow website builders, and \"pretty\" pictures with no engineering foundation behind them.",
+    "historyP2": "Our company offers a product that doesn't just look good, but works for your business. We build digital ecosystems that scale with you and don't fall apart at the first spike in traffic or when new features are added.",
+    "historyP3": "We believe that a brand's success today is 50% its digital infrastructure. We write clean, structured code because it works faster and more efficiently for your business.",
+    "origins": "IKSoft Origins",
+    "missionTitle": "Building solutions\nthat work globally.",
+    "missionText": "Our team understands the value of modern tools and knows how to use them so your business grows day by day, rather than just having a \"presence\" online.\nWe are here to raise the bar. Sleeves rolled up.",
+    "ctaButton": "Let's talk business"
+  },
+  "Services": {
+    "subtitle": "We know how to do it better",
+    "title": "Our Services:",
+    "items": {
+      "landing": {
+        "title": "Landing Page",
+        "description": "The entry point for your traffic. We design landing pages to turn visitors into clients. Perfect structure, catchy copywriting, and design that hits the mark.",
+        "tags": ["High Conversion", "Up to 5 days"]
+      },
+      "corporate": {
+        "title": "Corporate Website",
+        "description": "The digital headquarters of your brand. We build platforms that broadcast your values and build trust from the first second. Convenient admin panel, SEO foundation, and flawless performance on all devices.",
+        "tags": ["Brand Identity", "SEO Ready", "Up to 10 days"]
+      },
+      "ecommerce": {
+        "title": "E-Commerce",
+        "description": "Your business working 24/7. We build powerful online stores focused on the User Journey. From a convenient catalog to secure payment, we remove all barriers between the product and the buyer.",
+        "tags": ["Global Sales", "Integrations", "Up to 14 days"]
+      },
+      "webapp": {
+        "title": "Web Applications",
+        "description": "More than just a website. We develop complex ecosystems: CRMs, personal dashboards, SaaS solutions. Tools that automate routines and help your business scale.",
+        "tags": ["Automation", "React / Python / Go", "Up to 30 days"]
+      }
+    }
+  },
+  "FAQ": {
+    "title": "Questions & Answers:",
+    "stillHaveQuestions": "Still have questions?",
+    "contactUs": "Contact us",
+    "items": {
+      "01": {
+        "question": "How long does development take?",
+        "answer": "Timelines depend on complexity. A landing page takes 3-5 days, a corporate website 2-3 weeks. We always fix deadlines in the contract and pay penalties for delays."
+      },
+      "02": {
+        "question": "What is needed to get started?",
+        "answer": "We need you to fill out a brief and discuss your business goals. If you have references or a brandbook, it will speed up the process. A 50% prepayment is required before starting."
+      },
+      "03": {
+        "question": "Will the website work on mobile phones?",
+        "answer": "Absolutely. Mobile-first is our standard. We test websites on all popular screen sizes so they run smoothly on iPhones, Androids, and tablets."
+      },
+      "04": {
+        "question": "Do you provide support after launch?",
+        "answer": "Yes, we provide a warranty for technical flawless operation. We can also take the project on monthly support: updating content, monitoring security, and developing new features."
+      },
+      "05": {
+        "question": "Can I add new features later?",
+        "answer": "Our code is modular and clean. You can always upgrade the functionality, add new pages or integrations without rewriting the entire website from scratch."
+      }
+    }
+  },
+  "ContactSection": {
+    "subtitle": "Ready to start?",
+    "title": "We are always in touch",
+    "phone1": "+996 550 41 83 17 - Karakol",
+    "phone1Link": "+996550418317",
+    "phone2": "+996 550 41 83 17 - Bishkek",
+    "phone2Link": "+996550418317",
+    "socialLinks": {
+      "wa": "https://wa.me/+996550418317",
+      "tg": "https://t.me/pwnedking",
+      "ig": "https://instagram.com/",
+      "email": "mailto:rodionvitenberg@gmail.com"
+    },
+    "form": {
+      "nameLabel": "Your Name",
+      "namePlaceholder": "John Doe",
+      "contactLabel": "Email / Telegram",
+      "contactPlaceholder": "example@mail.com",
+      "messageLabel": "About the project",
+      "messagePlaceholder": "Tell us a bit about your task...",
+      "submit": "Submit Request",
+      "legal": "By clicking the button, you agree to our personal data processing policy."
+    }
+  },
+  "Header": {
+    "nav": {
+      "home": "Home",
+      "about": "About",
+      "services": "Services",
+      "contact": "Contact"
+    },
+    "aria": {
+      "home": "Go to home page",
+      "about": "Learn about us",
+      "services": "View our services",
+      "contact": "Get in touch",
+      "toggleMenu": "Toggle Menu"
+    }
+  }
+}

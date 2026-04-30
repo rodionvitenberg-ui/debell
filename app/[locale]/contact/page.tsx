@@ -2,6 +2,7 @@
 
 import { Instagram, Mail } from "lucide-react";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 // 1. ИКОНКА WHATSAPP (SVG)
 const WhatsAppIcon = ({ className }: { className?: string }) => (
@@ -17,39 +18,39 @@ const TelegramIcon = ({ className }: { className?: string }) => (
   </svg>
 );
 
-const contacts = [
-  {
-    name: "WhatsApp",
-    link: "https://wa.me/+996550418317", 
-    // Используем наш SVG компонент
-    icon: <WhatsAppIcon className="w-5 h-5" />,
-    color: "hover:bg-[#25D366] hover:text-white hover:border-transparent text-gray-600"
-  },
-  {
-    name: "Telegram",
-    link: "https://t.me/pwnedking", 
-    // Используем наш SVG компонент
-    icon: <TelegramIcon className="w-5 h-5" />,
-    color: "hover:bg-[#229ED9] hover:text-white hover:border-transparent text-gray-600"
-  },
-  {
-    name: "Instagram",
-    link: "https://instagram.com/",
-    // Instagram берем из lucide-react, он там нормальный (камера)
-    icon: <Instagram className="w-5 h-5" />,
-    color: "hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent text-gray-600"
-  },
-  {
-    name: "Email",
-    link: "mailto:rodionvitenberg@gmail.com",
-    icon: <Mail className="w-5 h-5" />,
-    color: "hover:bg-accent hover:text-white hover:border-transparent text-gray-600"
-  }
-];
-
 export default function ContactSection() {
+  const t = useTranslations("ContactSection");
+
+  // Массив контактов внутри компонента для доступа к t()
+  const contacts = [
+    {
+      name: "WhatsApp",
+      link: t("socialLinks.wa"), 
+      icon: <WhatsAppIcon className="w-5 h-5" />,
+      color: "hover:bg-[#25D366] hover:text-white hover:border-transparent text-gray-600"
+    },
+    {
+      name: "Telegram",
+      link: t("socialLinks.tg"), 
+      icon: <TelegramIcon className="w-5 h-5" />,
+      color: "hover:bg-[#229ED9] hover:text-white hover:border-transparent text-gray-600"
+    },
+    {
+      name: "Instagram",
+      link: t("socialLinks.ig"),
+      icon: <Instagram className="w-5 h-5" />,
+      color: "hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] hover:text-white hover:border-transparent text-gray-600"
+    },
+    {
+      name: "Email",
+      link: t("socialLinks.email"),
+      icon: <Mail className="w-5 h-5" />,
+      color: "hover:bg-accent hover:text-white hover:border-transparent text-gray-600"
+    }
+  ];
+
   return (
-    // МЕНЯЕМ ФОН НА БЕЛЫЙ (bg-white), ТЕКСТ НА ЧЕРНЫЙ (text-black)
+    // Добавлен bg-secondary из твоего обновленного кода
     <section id="contact" className="relative w-full bg-secondary text-black py-24 px-4 md:px-8">
       
       <div className="w-full max-w-5xl mx-auto">
@@ -57,40 +58,39 @@ export default function ContactSection() {
           {/* 1. ЗАГОЛОВОК И СОЦСЕТИ */}
           <div className="mb-16 md:mb-20 text-center md:text-left">
             <span className="text-background font-cool text-xs uppercase tracking-widest mb-3 block">
-                Готовы начать?
+                {t("subtitle")}
             </span>
             <h2 className="font-cool text-5xl md:text-7xl text-black font-bold uppercase leading-none mb-6">
-                Мы всегда на связи
+                {t("title")}
             </h2>
             
             <div className="flex flex-col gap-2 items-center md:items-start">
-                        {/* Номер телефона */}
+                        {/* Номер телефона 1 */}
                         <a 
-                            href="tel:+996550418317" 
+                            href={`tel:${t("phone1Link")}`} 
                             className="text-xl md:text-2xl font-bold text-black hover:text-accent transition-colors tracking-tight"
                         >
-                            +996 550 41 83 17 - Каракол
+                            {t("phone1")}
                         </a>
                         
-                        {/* Email (или второй номер) */}
+                        {/* Номер телефона 2 */}
                         <a 
-                            href="tel:+996550418317" 
+                            href={`tel:${t("phone2Link")}`} 
                             className="text-xl md:text-2xl font-bold text-black hover:text-accent transition-colors tracking-tight"
                         >
-                            +996 550 41 83 17 - Бишкек
+                            {t("phone2")}
                         </a>
 
                 {/* РЯД КВАДРАТНЫХ ИКОНОК СОЦСЕТЕЙ */}
-                <div className="flex gap-3">
+                <div className="flex gap-3 mt-4">
                     {contacts.map((contact, idx) => (
                         <Link 
                             key={idx}
                             href={contact.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            // Квадратные кнопки (w-12 h-12), светлая граница, без текста
                             className={`w-12 h-12 flex items-center justify-center rounded-md border border-gray-200 transition-all duration-300 ${contact.color}`}
-                            title={contact.name} // Добавляем title для доступности
+                            title={contact.name} 
                         >
                             {contact.icon}
                         </Link>
@@ -99,22 +99,20 @@ export default function ContactSection() {
             </div>
           </div>
 
-          {/* 2. ЕДИНАЯ ФОРМА (в стиле скриншота) */}
+          {/* 2. ЕДИНАЯ ФОРМА */}
           <div className="w-full">
               
               <form className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
                   
-                  {/* Имя (на всю ширину в мобилке, половина на десктопе) */}
+                  {/* Имя */}
                   <div className="flex flex-col gap-2 md:col-span-1">
                       <label htmlFor="name" className="text-xs font-mono text-black uppercase tracking-widest font-bold mb-1">
-                          Ваше Имя
+                          {t("form.nameLabel")}
                       </label>
                       <input 
                         type="text" 
                         id="name"
-                        placeholder="Иван Иванов"
-                        // Стиль скриншота: прозрачный фон, тонкая серая рамка снизу (или полная)
-                        // Выберем полную тонкую рамку для строгости.
+                        placeholder={t("form.namePlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors rounded-none"
                       />
                   </div>
@@ -122,40 +120,39 @@ export default function ContactSection() {
                   {/* Email или Телефон */}
                   <div className="flex flex-col gap-2 md:col-span-1">
                       <label htmlFor="contact" className="text-xs font-mono text-black uppercase tracking-widest font-bold mb-1">
-                          Email / Telegram
+                          {t("form.contactLabel")}
                       </label>
                       <input 
                         type="text" 
                         id="contact"
-                        placeholder="example@mail.com"
+                        placeholder={t("form.contactPlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors rounded-none"
                       />
                   </div>
 
-                  {/* Сообщение (на всю ширину) */}
+                  {/* Сообщение */}
                   <div className="flex flex-col gap-2 md:col-span-2 mt-4">
                       <label htmlFor="message" className="text-xs font-mono text-black uppercase tracking-widest font-bold mb-1">
-                          О проекте
+                          {t("form.messageLabel")}
                       </label>
                       <textarea 
                         id="message"
                         rows={3}
-                        placeholder="Расскажите немного о вашей задаче..."
+                        placeholder={t("form.messagePlaceholder")}
                         className="w-full bg-transparent border-b border-gray-300 py-4 text-black placeholder:text-gray-400 focus:outline-none focus:border-black transition-colors resize-none rounded-none"
                       />
                   </div>
 
-                  {/* Кнопка отправки (на всю ширину) */}
+                  {/* Кнопка отправки */}
                   <div className="md:col-span-2 mt-8">
                     <button 
                         type="button"
-                        // Черная кнопка, при наведении - акцентный цвет
                         className="w-full md:w-auto md:min-w-[200px] py-5 px-8 bg-black text-white font-bold uppercase tracking-widest text-sm hover:bg-accent transition-colors duration-300 rounded-md"
                     >
-                        Отправить Заявку
+                        {t("form.submit")}
                     </button>
                     <p className="text-gray-400 text-xs mt-4 font-mono">
-                        Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных.
+                        {t("form.legal")}
                     </p>
                   </div>
               </form>

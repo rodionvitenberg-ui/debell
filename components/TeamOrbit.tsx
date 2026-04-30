@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import {
   RadialSocials,
   RadialSocialsContent,
@@ -10,6 +11,8 @@ import {
 } from "@/components/radial-socials";
 
 export default function TeamOrbit() {
+  const t = useTranslations("AboutTeam");
+  
   // Начальные значения (десктопные)
   const [radii, setRadii] = useState([150, 250, 350]);
 
@@ -45,9 +48,8 @@ export default function TeamOrbit() {
 
       {/* ЦЕНТРАЛЬНЫЙ ТЕКСТ */}
       <div className="absolute z-10 flex flex-col items-center justify-center text-center pointer-events-none max-w-[130px] md:max-w-[220px]">
-        
         <h3 className="font-cool text-white text-[0.80rem] md:text-[1.35rem] font-bold tracking-wide leading-tight">
-          Маленькая, ламповая, но очень сильная команда.
+          {t("orbitText")}
         </h3>
       </div>
 
@@ -74,7 +76,7 @@ export default function TeamOrbit() {
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
                     src="/vova.jpg"
-                    alt="Сотрудник 1"
+                    alt={`${t("employeeAlt")} 1`}
                     fill
                     className="object-cover fill" 
                   />
@@ -99,7 +101,7 @@ export default function TeamOrbit() {
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
                     src="/rodion.jpg"
-                    alt="Сотрудник 2"
+                    alt={`${t("employeeAlt")} 2`}
                     fill
                     className="object-cover"
                   />
@@ -124,7 +126,7 @@ export default function TeamOrbit() {
                 <div className="relative w-full h-full rounded-full overflow-hidden border border-white/20">
                   <Image
                     src="/tanya.jpg"
-                    alt="Сотрудник 3"
+                    alt={`${t("employeeAlt")} 3`}
                     fill
                     className="object-cover"
                   />

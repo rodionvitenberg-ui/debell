@@ -1,119 +1,112 @@
 "use client";
 
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
+// 1. Оставляем только технические данные (ID и путь к картинке)
 const cardData = [
-  {
-    title: "Landing Page",
-    description: "Точка входа для вашего трафика. Мы проектируем лендинги для того, чтобы превращать посетителей в клиентов. Идеальная структура, цепляющий копирайтинг и дизайн, который бьет точно в цель.",
-    img: "/project1.png", 
-    tags: ["High Conversion", "до 5 дней",]
-  },
-  {
-    title: "Corporate Website",
-    description: "Цифровая штаб-квартира вашего бренда. Мы создаем платформы, которые транслируют ваши ценности и вызывают доверие с первой секунды. Удобная админка, SEO-фундамент и безупречная работа на всех устройствах.",
-    img: "/project2.png",
-    tags: ["Brand Identity", "SEO Ready", "до 10 дней"]
-  },
-  {
-    title: "E-Commerce",
-    description: "Ваш бизнес работает 24/7. Мы строим мощные интернет-магазины с фокусом на User Journey. От удобного каталога до безопасной оплаты - мы убираем все барьеры между товаром и покупателем.",
-    img: "/project3.png",
-    tags: ["Global Sales", "Integrations", "до 14 дней"]
-  },
-  {
-    title: "Web Applications",
-    description: "Больше, чем просто сайт. Мы разрабатываем сложные экосистемы: CRM, личные кабинеты, SaaS-решения. Инструменты, которые автоматизируют рутину и помогают вашему бизнесу масштабироваться.",
-    img: "/project4.png",
-    tags: ["Automation", "React / Python / Go", "до 30 дней"]
-  },
-];
+  { id: "landing", img: "/project1.png" },
+  { id: "corporate", img: "/project2.png" },
+  { id: "ecommerce", img: "/project3.png" },
+  { id: "webapp", img: "/project4.png" },
+] as const;
+
+type ServiceCardType = typeof cardData[number];
 
 export default function Services() {
+  const t = useTranslations("Services");
+
   return (
     <section className="relative w-full bg-secondary py-16 md:py-20 px-2 md:px-4">
       
       <div className="relative w-full max-w-[100%] mx-auto isolate">
          
-         {/* ПОДЛОЖКА (Только десктоп) */}
+         {/* ПОДЛОЖКА */}
          <div className="hidden md:block absolute inset-0 bg-background rounded-[2.5rem] -z-10 shadow-2xl" />
 
-         {/* ШАПКА БЛОКА (ДЕСКТОПНАЯ)
-            hidden md:flex -> Видна только на компе.
-            На мобилке мы спрятали её, чтобы она не болталась отдельно.
-         */}
+         {/* ШАПКА БЛОКА (ДЕСКТОПНАЯ) */}
          <div className="hidden md:flex md:sticky md:top-0 z-50 w-full bg-background rounded-t-[2.5rem] rounded-b-[2.5rem] px-12 py-10 h-[180px] items-center mb-0">
              <div className="flex flex-col justify-center w-full">
                 <span className="text-white/50 font-cool text-xs uppercase tracking-widest mb-3 block">
-                    Мы знаем, как сделать лучше
+                    {t("subtitle")}
                 </span>
                 <h2 className="font-cool text-6xl text-white font-bold uppercase leading-none">
-                    Наши Услуги:
+                    {t("title")}
                 </h2>
              </div>
          </div>
 
-         {/* --- МОБИЛЬНАЯ ВЕРСИЯ (Единый блок) --- 
-            Теперь заголовок находится ВНУТРИ этого блока.
-         */}
+         {/* --- МОБИЛЬНАЯ ВЕРСИЯ --- */}
          <div className="md:hidden bg-background rounded-[2rem] p-6 flex flex-col gap-8 shadow-2xl">
             
-            {/* МОБИЛЬНЫЙ ЗАГОЛОВОК (Внутри блока) */}
             <div className="border-b border-white/10 pb-6">
                 <span className="text-white/50 font-cool text-[10px] uppercase tracking-widest mb-2 block">
-                    Мы знаем, как сделать лучше
+                    {t("subtitle")}
                 </span>
                 <h2 className="font-cool text-4xl text-white font-bold uppercase leading-none">
-                    Наши Услуги:
+                    {t("title")}
                 </h2>
             </div>
 
             {/* СПИСОК УСЛУГ */}
-            {cardData.map((card, index) => (
-                <div key={index} className="flex flex-col gap-5 border-b border-white/10 pb-8 last:border-0 last:pb-0">
-                    {/* 1. Заголовок */}
-                    <h3 className="text-2xl font-bold text-white uppercase font-cool leading-tight">
-                        {card.title}
-                    </h3>
+            {cardData.map((card, index) => {
+                // Извлекаем переводы для текущей карточки
+                const title = t(`items.${card.id}.title` as any);
+                const description = t(`items.${card.id}.description` as any);
+                const tags = t.raw(`items.${card.id}.tags` as any) as string[];
 
-                    {/* 2. Картинка */}
-                    <div className="relative w-full h-[200px] rounded-xl overflow-hidden bg-[#050505]">
-                        <Image 
-                            src={card.img} 
-                            alt={card.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 50vw"
-                            className="object-cover opacity-80"
-                        />
-                    </div>
+                return (
+                  <div key={card.id} className="flex flex-col gap-5 border-b border-white/10 pb-8 last:border-0 last:pb-0">
+                      <h3 className="text-2xl font-bold text-white uppercase font-cool leading-tight">
+                          {title}
+                      </h3>
 
-                    {/* 3. Теги */}
-                    <div className="flex flex-wrap gap-2">
-                        {card.tags.map((tag: string, idx: number) => (
-                        <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/50 text-[10px] uppercase tracking-wider">
-                            {tag}
-                        </span>
-                        ))}
-                    </div>
+                      <div className="relative w-full h-[200px] rounded-xl overflow-hidden bg-[#050505]">
+                          <Image 
+                              src={card.img} 
+                              alt={title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 50vw"
+                              className="object-cover opacity-80"
+                          />
+                      </div>
 
-                    {/* 4. Текст */}
-                    <p className="text-sm text-white/60 leading-relaxed">
-                        {card.description}
-                    </p>
-                </div>
-            ))}
+                      <div className="flex flex-wrap gap-2">
+                          {tags.map((tag, idx) => (
+                          <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/50 text-[10px] uppercase tracking-wider">
+                              {tag}
+                          </span>
+                          ))}
+                      </div>
+
+                      <p className="text-sm text-white/60 leading-relaxed">
+                          {description}
+                      </p>
+                  </div>
+                );
+            })}
          </div>
 
          {/* --- ДЕСКТОПНАЯ ВЕРСИЯ КАРТОЧЕК --- */}
          <div className="hidden md:block relative w-full pb-0 md:rounded-b-[2.5rem] md:overflow-clip">
-            {cardData.map((card, index) => (
-                <DesktopServiceCard 
-                    key={index} 
-                    card={card} 
-                    index={index}
-                    total={cardData.length}
-                />
-            ))}
+            {cardData.map((card, index) => {
+                // Передаем данные в десктопную карточку
+                const title = t(`items.${card.id}.title` as any);
+                const description = t(`items.${card.id}.description` as any);
+                const tags = t.raw(`items.${card.id}.tags` as any) as string[];
+
+                return (
+                  <DesktopServiceCard 
+                      key={card.id} 
+                      card={card} 
+                      index={index}
+                      total={cardData.length}
+                      title={title}
+                      description={description}
+                      tags={tags}
+                  />
+                );
+            })}
          </div>
 
       </div>
@@ -121,8 +114,22 @@ export default function Services() {
   );
 }
 
-// Компонент только для десктопа
-function DesktopServiceCard({ card, index, total }: { card: any, index: number, total: number }) {
+// Обновили пропсы для чистой типизации
+function DesktopServiceCard({ 
+  card, 
+  index, 
+  total,
+  title,
+  description,
+  tags
+}: { 
+  card: ServiceCardType; 
+  index: number; 
+  total: number;
+  title: string;
+  description: string;
+  tags: string[];
+}) {
     const topOffset = 180; 
     const isLast = index === total - 1;
 
@@ -148,12 +155,12 @@ function DesktopServiceCard({ card, index, total }: { card: any, index: number, 
                     <div className="p-12 flex flex-col justify-center relative z-10">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-5xl font-bold text-white uppercase font-cool leading-tight">
-                                {card.title}
+                                {title}
                             </h3>
                         </div>
                         
                         <div className="flex flex-wrap gap-3 mb-8">
-                            {card.tags.map((tag: string, idx: number) => (
+                            {tags.map((tag, idx) => (
                                 <span key={idx} className="px-3 py-1 bg-white/5 border border-white/10 rounded-full text-white/50 text-xs uppercase tracking-wider">
                                     {tag}
                                 </span>
@@ -161,7 +168,7 @@ function DesktopServiceCard({ card, index, total }: { card: any, index: number, 
                         </div>
                         
                         <p className="text-lg text-white/60 mb-10 leading-relaxed">
-                            {card.description}
+                            {description}
                         </p>
                     </div>
 
@@ -169,7 +176,7 @@ function DesktopServiceCard({ card, index, total }: { card: any, index: number, 
                     <div className="relative w-full h-full">
                         <Image 
                             src={card.img} 
-                            alt={card.title}
+                            alt={title}
                             fill
                             sizes="50vw"
                             className="object-cover opacity-60"
