@@ -48,7 +48,7 @@ export default function Hero() {
       <div 
         className="relative w-full max-w-[100%] md:max-w-100%] 
                    flex flex-col justify-between
-                   min-h-[50vh] h-auto mx-2
+                   min-h-[55vh] h-auto mx-2
                    md:flex-1 md:min-h-[45vh] md:justify-between
                    bg-background rounded-[2rem] md:rounded-[2.5rem] 
                    overflow-hidden"
