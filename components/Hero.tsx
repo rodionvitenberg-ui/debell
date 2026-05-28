@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import RotatingText from "./RotatingText";
@@ -8,6 +9,14 @@ import ContactBlock from "./ContactBlock";
 
 export default function Hero() {
   const t = useTranslations("Hero");
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    // Безопасная проверка только на клиенте (чтобы избежать hydration error)
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Мапим ключи из словаря в массив для рендера
   const topLabels = [
@@ -53,19 +62,21 @@ export default function Hero() {
                    bg-background rounded-[2rem] md:rounded-[2.5rem] 
                    overflow-hidden"
       >
-        
         {/* --- ФОН --- */}
         <div className="absolute inset-0 z-0 overflow-hidden rounded-[inherit]">
             <div className="absolute inset-0 bg-background z-[1]" />
             <div className="absolute inset-0 z-[2]">
                 <FloatingLines 
-                    enabledWaves={["bottom","middle","top"]}
-                    lineCount={5}
+                    // На мобилках оставляем только 2 волны из 3, чтобы снизить шум и нагрузку
+                    enabledWaves={isMobile ? ["bottom", "middle"] : ["bottom", "middle", "top"]} 
+                    // 3 линии на мобилке смотрятся так же плотно, как 5 на десктопе
+                    lineCount={isMobile ? 3 : 5}
                     lineDistance={2}
                     bendRadius={5}
                     bendStrength={-0.5}
-                    interactive={true}
-                    parallax={true}
+                    // Отключаем расчеты мыши и параллакса на тач-устройствах
+                    interactive={!isMobile} 
+                    parallax={!isMobile}
                     linesGradient={['#84ab2f', '#84ab2f', '#84ab2f']} 
                 />
             </div>

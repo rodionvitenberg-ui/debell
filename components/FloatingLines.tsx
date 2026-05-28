@@ -119,6 +119,7 @@ float wave(vec2 uv, float offset, vec2 screenUv, vec2 mouseUv, bool shouldBend) 
   return 0.0175 / max(abs(m) + 0.01, 1e-3) + 0.01;
 }
 
+const int MAX_LINES = 8;
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   vec2 baseUv = (2.0 * fragCoord - iResolution.xy) / iResolution.y;
   baseUv.y *= -1.0;
@@ -138,7 +139,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
   
   if (enableBottom) {
-    for (int i = 0; i < bottomLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= bottomLineCount) break; // <--- Магия оптимизации WebGL
+      
       float fi = float(i);
       float t = fi / max(float(bottomLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -156,7 +159,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
 
   if (enableMiddle) {
-    for (int i = 0; i < middleLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= middleLineCount) break; // <---
+      
       float fi = float(i);
       float t = fi / max(float(middleLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -174,7 +179,9 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
   }
 
   if (enableTop) {
-    for (int i = 0; i < topLineCount; ++i) {
+    for (int i = 0; i < MAX_LINES; ++i) {
+      if (i >= topLineCount) break; // <---
+      
       float fi = float(i);
       float t = fi / max(float(topLineCount - 1), 1.0);
       vec3 lineCol = getLineColor(t, b);
@@ -309,7 +316,7 @@ export default function FloatingLines({
     camera.position.z = 1;
 
     const renderer = new WebGLRenderer({ antialias: false, alpha: false, powerPreference: 'high-performance' });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.25));
     renderer.domElement.style.width = '100%';
     renderer.domElement.style.height = '100%';
     containerRef.current.appendChild(renderer.domElement);

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react"; 
-import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter, usePathname } from "next/navigation";
-import { useLocale, useTranslations } from "next-intl"; // Добавили useTranslations
+import { useLocale, useTranslations } from "next-intl"; 
 import StaggeredMenu from "./StaggeredMenu";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
@@ -23,12 +23,10 @@ export default function Header() {
   const t = useTranslations("Header"); // Инициализируем переводы
   const [isOpen, setIsOpen] = useState(false);
   const [isNavigating, setIsNavigating] = useState(false);
-  const [hidden, setHidden] = useState(false);
   
   const router = useRouter(); 
   const pathname = usePathname(); 
   const locale = useLocale(); 
-  const { scrollY } = useScroll();
 
   // Массив меню теперь внутри, чтобы иметь доступ к t()
   const menuItems = [
@@ -40,21 +38,12 @@ export default function Header() {
 
   const isContactPage = pathname === `/${locale}/contact`;
 
-  useMotionValueEvent(scrollY, "change", (latest) => {
-      const previous = scrollY.getPrevious() ?? 0;
-      if (latest > previous && latest > 150) {
-          setHidden(true);
-      } else {
-          setHidden(false);
-      }
-  });
-
   useEffect(() => {
     if (isNavigating) {
         const timer = setTimeout(() => setIsNavigating(false), 500); 
         return () => clearTimeout(timer);
     }
-  }, [pathname]); 
+  }, [pathname, isNavigating]); 
 
   const toggleMenu = () => setIsOpen((prev) => !prev);
   const blurredClass = "blur-sm opacity-50 pointer-events-none";
@@ -103,10 +92,7 @@ export default function Header() {
         )}
       </AnimatePresence>
 
-      <motion.header
-        variants={{ visible: { y: 0 }, hidden: { y: "-100%" }}}
-        animate={hidden ? "hidden" : "visible"}
-        transition={{ duration: 0.35, ease: "easeInOut" }}
+      <header
         className="fixed top-0 left-0 z-[60] w-full flex items-center justify-between px-6 py-2 md:px-12 bg-background pointer-events-auto shadow-sm transform-gpu isolation-auto"
       >
         
@@ -206,7 +192,7 @@ export default function Header() {
             </button>
         </div>
 
-      </motion.header>
+      </header>
 
       <StaggeredMenu 
         isOpen={isOpen} 
